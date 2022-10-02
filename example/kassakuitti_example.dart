@@ -1,6 +1,10 @@
 import 'package:kassakuitti/kassakuitti.dart';
 
 void main() {
-  var awesome = Awesome();
-  print('awesome: ${awesome.isAwesome}');
+  var kassakuitti = Kassakuitti(
+      textFilePath: '/path/to/textFile.txt',
+      htmlFilePath: '/path/to/htmlFile.html');
+  print(kassakuitti);
+
+  kassakuitti.run();
 }

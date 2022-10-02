@@ -9,18 +9,18 @@ class Kassakuitti {
   SelectedFileFormat selectedFileFormat;
 
   Kassakuitti(
-      {this.textFilePath,
+      {required this.textFilePath,
       required this.htmlFilePath,
       this.selectedShop = SelectedShop.sKaupat,
       this.selectedFileFormat = SelectedFileFormat.excel});
 
-  // Kassakuitti.anotherConstructor(this.textFilePath, this.htmlFilePath,
+  // Kassakuitti(this.textFilePath, this.htmlFilePath,
   //     {this.selectedShop = SelectedShop.sKaupat,
   //     this.selectedFileFormat = SelectedFileFormat.excel});
 
   @override
   String toString() {
-    return 'Kassakuitti(textFilePath: $textFilePath, htmlFilePath: $htmlFilePath, selectedShop: $selectedShop, selectedFileFormat: $selectedFileFormat)';
+    return 'Kassakuitti(textFilePath: $textFilePath, htmlFilePath: $htmlFilePath, selectedShop: ${selectedShop.value}, selectedFileFormat: ${selectedFileFormat.value})';
   }
 
   void run() {

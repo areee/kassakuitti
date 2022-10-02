@@ -23,7 +23,7 @@ void main() {
 
     test('Kassakuitti toString', () {
       expect(kassakuitti.toString(),
-          'Kassakuitti(textFilePath: test.txt, htmlFilePath: test.html, selectedShop: SelectedShop.kRuoka, selectedFileFormat: SelectedFileFormat.csv)');
+          'Kassakuitti(textFilePath: test.txt, htmlFilePath: test.html, selectedShop: K-ruoka, selectedFileFormat: CSV)');
     });
 
     test('Kassakuitti default values', () {
