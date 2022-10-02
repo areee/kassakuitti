@@ -1,7 +1,7 @@
 name: kassakuitti
-description: A starting point for Dart libraries or applications.
+description: A Dart package for handling "dart_kassakuitti_cli" & "rvka" Flutter GUI 
 version: 0.1.0
-# homepage: https://www.example.com
+homepage: https://github.com/areee/kassakuitti
 
 publish_to: 'none' # for now, do not publish the package into pub.dev
 
