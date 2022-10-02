@@ -1,5 +1,6 @@
 // TODO: Put public facing types in this file.
 
+import 'package:kassakuitti/src/utils/selected_file_format_helper.dart';
 import 'package:kassakuitti/src/utils/selected_shop_helper.dart';
 
 /// Checks if you are awesome. Spoiler: you are.
@@ -13,14 +14,18 @@ class Awesome {
 class Kassakuitti {
   String? textFilePath;
   String htmlFilePath;
-  String? selectedShop;
-  String? selectedFileFormat;
+  SelectedShop selectedShop;
+  SelectedFileFormat selectedFileFormat;
 
   Kassakuitti(
       {this.textFilePath,
       required this.htmlFilePath,
-      this.selectedShop, // TODO: Change to enum
-      this.selectedFileFormat}); // TODO: Change to enum
+      this.selectedShop = SelectedShop.sKaupat,
+      this.selectedFileFormat = SelectedFileFormat.excel});
+
+  // Kassakuitti.anotherConstructor(this.textFilePath, this.htmlFilePath,
+  //     {this.selectedShop = SelectedShop.sKaupat,
+  //     this.selectedFileFormat = SelectedFileFormat.excel});
 
   @override
   String toString() {
