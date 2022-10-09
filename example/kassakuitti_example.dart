@@ -1,10 +1,10 @@
 import 'package:kassakuitti/kassakuitti.dart';
 
 void main() {
-  var kassakuitti = Kassakuitti(
-      textFilePath: '/path/to/textFile.txt',
-      htmlFilePath: '/path/to/htmlFile.html');
+  var textFilePath = '/path/to/textFile.txt';
+  var htmlFilePath = '/path/to/htmlFile.html';
+  var kassakuitti = Kassakuitti(textFilePath, htmlFilePath);
   print(kassakuitti);
 
-  kassakuitti.run();
+  var a = kassakuitti.readReceiptProducts();
 }

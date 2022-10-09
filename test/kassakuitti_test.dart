@@ -5,9 +5,7 @@ import 'package:test/test.dart';
 
 void main() {
   group('Kassakuitti', () {
-    final kassakuitti = Kassakuitti(
-        textFilePath: 'test.txt',
-        htmlFilePath: 'test.html',
+    final kassakuitti = Kassakuitti('test.txt', 'test.html',
         selectedShop: SelectedShop.kRuoka,
         selectedFileFormat: SelectedFileFormat.csv);
 
@@ -27,8 +25,7 @@ void main() {
     });
 
     test('Kassakuitti default values', () {
-      final kassakuittiDefaultValues =
-          Kassakuitti(textFilePath: 'test.txt', htmlFilePath: 'test.html');
+      final kassakuittiDefaultValues = Kassakuitti('test.txt', 'test.html');
       expect(kassakuittiDefaultValues.textFilePath, 'test.txt');
       expect(kassakuittiDefaultValues.htmlFilePath, 'test.html');
       expect(kassakuittiDefaultValues.selectedShop, SelectedShop.sKaupat);

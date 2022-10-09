@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:kassakuitti/src/models/receipt_product.dart';
 import 'package:kassakuitti/src/utils/selected_file_format_helper.dart';
 import 'package:kassakuitti/src/utils/selected_shop_helper.dart';
 
@@ -8,24 +11,29 @@ class Kassakuitti {
   SelectedShop selectedShop;
   SelectedFileFormat selectedFileFormat;
 
-  Kassakuitti(
-      {required this.textFilePath,
-      required this.htmlFilePath,
-      this.selectedShop = SelectedShop.sKaupat,
+  Kassakuitti(this.textFilePath, this.htmlFilePath,
+      {this.selectedShop = SelectedShop.sKaupat,
       this.selectedFileFormat = SelectedFileFormat.excel});
-
-  // Kassakuitti(this.textFilePath, this.htmlFilePath,
-  //     {this.selectedShop = SelectedShop.sKaupat,
-  //     this.selectedFileFormat = SelectedFileFormat.excel});
 
   @override
   String toString() {
-    return 'Kassakuitti(textFilePath: $textFilePath, htmlFilePath: $htmlFilePath, selectedShop: ${selectedShop.value}, selectedFileFormat: ${selectedFileFormat.value})';
+    return 'Kassakuitti(textFilePath: $textFilePath, htmlFilePath: $htmlFilePath'
+        ', selectedShop: ${selectedShop.value}, selectedFileFormat: ${selectedFileFormat.value})';
   }
 
   void run() {
     print('Running...');
 
     // TODO: Implement run method
+  }
+
+  Future<List<ReceiptProduct>> readReceiptProducts() async {
+    File file = File(textFilePath!); // TODO: Handle null safety
+    try {
+      var a = await file.readAsLines();
+    } on FileSystemException {
+      rethrow;
+    }
+    return [];
   }
 }
