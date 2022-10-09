@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:kassakuitti/src/models/receipt_product.dart';
+import 'package:kassakuitti/src/strings_to_receipt_products.dart';
 import 'package:kassakuitti/src/utils/selected_file_format_helper.dart';
 import 'package:kassakuitti/src/utils/selected_shop_helper.dart';
 
@@ -21,19 +20,8 @@ class Kassakuitti {
         ', selectedShop: ${selectedShop.value}, selectedFileFormat: ${selectedFileFormat.value})';
   }
 
-  void run() {
-    print('Running...');
-
-    // TODO: Implement run method
-  }
-
+  /// Read receipt products from text file.
   Future<List<ReceiptProduct>> readReceiptProducts() async {
-    File file = File(textFilePath!); // TODO: Handle null safety
-    try {
-      var a = await file.readAsLines();
-    } on FileSystemException {
-      rethrow;
-    }
-    return [];
+    return strings2ReceiptProducts(textFilePath);
   }
 }
