@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:kassakuitti/src/models/receipt_product.dart';
 import 'package:kassakuitti/src/utils/extensions/double_extension.dart';
-import 'package:kassakuitti/src/utils/line_helper.dart';
+import 'package:kassakuitti/src/utils/row_helper.dart';
 
-/// Read a text file and return as a list of lines.
+/// Read a text file and return as a list of rows.
 Future<List<String>?> _readReceiptFile(String filePath) async {
   File file = File(filePath);
   try {
@@ -29,7 +29,7 @@ Future<List<ReceiptProduct>> strings2ReceiptProducts(String? filePath) async {
 /// Read receipt products from a list of strings.
 Future<List<ReceiptProduct>> strings2ReceiptProductsFromList(
     List<String> stringList) async {
-  var helper = LineHelper();
+  var helper = RowHelper();
   var receiptProducts = <ReceiptProduct>[];
 
   for (var row in stringList) {
@@ -39,21 +39,21 @@ Future<List<ReceiptProduct>> strings2ReceiptProductsFromList(
       continue;
     }
     row = row.toLowerCase();
-    // Do not handle sum lines (after a row of strokes):
+    // Do not handle sum rows (after a row of strokes):
     if (row.contains('----------')) {
       break;
     }
     // Refund row:
     else if (row.contains('palautus')) {
-      helper.previousLine = PreviousLine.refund;
+      helper.previousRow = PreviousRow.refund;
     }
     // When the previous row is a refund row, skip the next two rows:
-    else if (helper.previousLine == PreviousLine.refund) {
-      if (helper.calcLines == 1) {
-        helper.calcLines = 0;
-        helper.previousLine = PreviousLine.notSet;
+    else if (helper.previousRow == PreviousRow.refund) {
+      if (helper.rowAmount == 1) {
+        helper.rowAmount = 0;
+        helper.previousRow = PreviousRow.notSet;
       } else {
-        helper.calcLines++;
+        helper.rowAmount++;
       }
     }
     // A discount row:
