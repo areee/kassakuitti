@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:kassakuitti/src/models/receipt_product.dart';
+import 'package:kassakuitti/src/utils/extensions/double_extension.dart';
+import 'package:kassakuitti/src/utils/line_helper.dart';
 
 /// Read a text file and return as a list of lines.
 Future<List<String>?> _readReceiptFile(String filePath) async {
@@ -18,5 +20,74 @@ Future<List<ReceiptProduct>> strings2ReceiptProducts(String? filePath) async {
     throw Exception('Text file path is null');
   }
   var stringList = await _readReceiptFile(filePath);
-  return [];
+  if (stringList == null) {
+    throw Exception('Text file is empty');
+  }
+  return strings2ReceiptProductsFromList(stringList);
+}
+
+/// Read receipt products from a list of strings.
+Future<List<ReceiptProduct>> strings2ReceiptProductsFromList(
+    List<String> stringList) async {
+  var helper = LineHelper();
+  var receiptProducts = <ReceiptProduct>[];
+
+  for (var row in stringList) {
+    row = row.trim();
+    // If row is empty, skip it.
+    if (row.isEmpty) {
+      continue;
+    }
+    row = row.toLowerCase();
+    // Do not handle sum lines (after a row of strokes):
+    if (row.contains('----------')) {
+      break;
+    }
+    // Refund row:
+    else if (row.contains('palautus')) {
+      helper.previousLine = PreviousLine.refund;
+    }
+    // When the previous row is a refund row, skip the next two rows:
+    else if (helper.previousLine == PreviousLine.refund) {
+      if (helper.calcLines == 1) {
+        helper.calcLines = 0;
+        helper.previousLine = PreviousLine.notSet;
+      } else {
+        helper.calcLines++;
+      }
+    }
+    // A discount row:
+    else if (row.contains('alennus')) {
+      /*
+        Split by 12-33 whitespaces.
+        An example of a discount row:
+        S-Etu alennus                        0,89-
+      */
+      var splittedItems = row.split(RegExp(r'\s{12,33}'));
+      var discountPrice = double.parse(splittedItems[1]
+          .replaceAll(RegExp(r'\-'), '') // Remove minus sign.
+          .replaceAll(RegExp(r','), '.')); // Replace comma with dot.
+
+      var lastProduct = receiptProducts.last;
+      var origTotalPrice =
+          double.parse(lastProduct.totalPrice.replaceAll(RegExp(r','), '.'));
+
+      var discountedPrice = (origTotalPrice - discountPrice).toPrecision(2);
+      var discountedPriceAsString =
+          discountedPrice.toString().replaceAll(RegExp(r'\.'), ',');
+
+      if (lastProduct.quantity > 1) {
+        var discountedPricePerUnit = (discountedPrice / lastProduct.quantity)
+            .toPrecision(2)
+            .toString()
+            .replaceAll(RegExp(r'\.'), ',');
+
+        lastProduct.pricePerUnit = discountedPricePerUnit;
+      }
+      lastProduct.totalPrice = discountedPriceAsString;
+      lastProduct.discountCounted = 'yes';
+    }
+  }
+
+  return receiptProducts;
 }
