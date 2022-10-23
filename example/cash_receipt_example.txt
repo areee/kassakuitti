@@ -1,0 +1,8 @@
+ PERUNA-SIPULISEKOITUS                0,85 
+ RUUSUKAALI                           5,96 
+       2 KPL       2,98 €/KPL
+ PAKKAUSMATERIAALIT                   0,60 
+ TOIMITUSMAKSU 10,90                 10,90 
+                                 ----------
+ YHTEENSÄ                            18,31 
+ VERKKOMAKSU                         18,31 

@@ -1,18 +1,18 @@
 class ReceiptProduct {
   String name;
-  String totalPrice;
+  double totalPrice;
   int quantity;
-  String pricePerUnit;
+  double? pricePerUnit;
   String eanCode;
-  String discountCounted;
+  bool discountCounted;
 
   ReceiptProduct({
     this.name = 'Default receipt product name',
-    this.totalPrice = '0',
+    this.totalPrice = 0.00,
     this.quantity = 1,
-    this.pricePerUnit = '',
+    this.pricePerUnit,
     this.eanCode = '',
-    this.discountCounted = '',
+    this.discountCounted = false,
   });
 
   @override

@@ -39,6 +39,9 @@ Future<List<ReceiptProduct>> strings2ReceiptProductsFromList(
       continue;
     }
     row = row.toLowerCase();
+    // Replace non-breaking space with a normal space
+    row = row.replaceAll(RegExp(r'\u00a0'), ' ');
+
     // Do not handle sum rows (after a row of strokes):
     if (row.contains('----------')) {
       break;
@@ -56,8 +59,12 @@ Future<List<ReceiptProduct>> strings2ReceiptProductsFromList(
         helper.rowAmount++;
       }
     }
-    // A discount row:
-    else if (row.contains('alennus')) {
+    /*
+      A discount row or a campaign row
+      (i.e. usually means that there's a mistake in the previous row BUT not always 
+      -> let's assume that it's a discount row):
+    */
+    else if (row.contains('alennus') || row.contains('kampanja')) {
       /*
         Split by 12-33 whitespaces.
         An example of a discount row:
@@ -69,23 +76,46 @@ Future<List<ReceiptProduct>> strings2ReceiptProductsFromList(
           .replaceAll(RegExp(r','), '.')); // Replace comma with dot.
 
       var lastProduct = receiptProducts.last;
-      var origTotalPrice =
-          double.parse(lastProduct.totalPrice.replaceAll(RegExp(r','), '.'));
+      var origTotalPrice = lastProduct.totalPrice;
 
       var discountedPrice = (origTotalPrice - discountPrice).toPrecision(2);
-      var discountedPriceAsString =
-          discountedPrice.toString().replaceAll(RegExp(r'\.'), ',');
 
       if (lastProduct.quantity > 1) {
-        var discountedPricePerUnit = (discountedPrice / lastProduct.quantity)
-            .toPrecision(2)
-            .toString()
-            .replaceAll(RegExp(r'\.'), ',');
-
-        lastProduct.pricePerUnit = discountedPricePerUnit;
+        lastProduct.pricePerUnit =
+            (discountedPrice / lastProduct.quantity).toPrecision(2);
       }
-      lastProduct.totalPrice = discountedPriceAsString;
-      lastProduct.discountCounted = 'yes';
+      lastProduct.totalPrice = discountedPrice;
+      lastProduct.discountCounted = true;
+    }
+    // If a row starts with a digit (e.g. 4 kpl), it is a quantity and price per unit row:
+    else if (row.startsWith(RegExp(r'^\d+\s{1}kpl'))) {
+      /*
+        Split by 6-7 whitespaces between quantity and price per unit.
+        An example:
+        2 kpl       2,98 €/kpl
+      */
+      var items = row.split(RegExp(r'\s{6,7}'));
+      var quantity =
+          items[0].substring(0, 2).trim().replaceAll(RegExp(r','), '.');
+
+      var lastProduct = receiptProducts.last;
+      lastProduct.quantity = double.parse(quantity)
+          .ceil(); // e.g. 0.2 -> 1 (round up) or 0.5 -> 1 (round up)
+      lastProduct.pricePerUnit = double.parse(
+          items[1].substring(0, 5).trim().replaceAll(RegExp(r','), '.'));
+    }
+
+    /*
+      A "normal" row. An example:
+      PERUNA-SIPULISEKOITUS                0,85
+    */
+    else {
+      var items = row.split(RegExp(r'\s{8,35}'));
+      var name = items[0];
+      var price = double.parse(items[1].trim().replaceAll(RegExp(r','), '.'));
+
+      var product = ReceiptProduct(name: name, totalPrice: price);
+      receiptProducts.add(product);
     }
   }
 
