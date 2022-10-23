@@ -49,60 +49,12 @@ Future<List<ReceiptProduct>> strings2ReceiptProductsFromList(
     // Refund row:
     else if (row.contains('palautus')) {
       helper.previousRow = PreviousRow.refund;
-    }
-    // When the previous row is a refund row, skip the next two rows:
-    else if (helper.previousRow == PreviousRow.refund) {
-      if (helper.rowAmount == 1) {
-        helper.rowAmount = 0;
-        helper.previousRow = PreviousRow.notSet;
-      } else {
-        helper.rowAmount++;
-      }
-    }
-    /*
-      A discount row or a campaign row
-      (i.e. usually means that there's a mistake in the previous row BUT not always 
-      -> let's assume that it's a discount row):
-    */
-    else if (row.contains('alennus') || row.contains('kampanja')) {
-      /*
-        Split by 12-33 whitespaces.
-        An example of a discount row:
-        S-Etu alennus                        0,89-
-      */
-      var splittedItems = row.split(RegExp(r'\s{12,33}'));
-      var discountPrice = double.parse(splittedItems[1]
-          .replaceAll(RegExp(r'\-'), '') // Remove minus sign.
-          .replaceAll(RegExp(r','), '.')); // Replace comma with dot.
-
-      var lastProduct = receiptProducts.last;
-      var origTotalPrice = lastProduct.totalPrice;
-
-      var discountedPrice = (origTotalPrice - discountPrice).toPrecision(2);
-
-      if (lastProduct.quantity > 1) {
-        lastProduct.pricePerUnit =
-            (discountedPrice / lastProduct.quantity).toPrecision(2);
-      }
-      lastProduct.totalPrice = discountedPrice;
-      lastProduct.discountCounted = true;
-    }
-    // If a row starts with a digit (e.g. 4 kpl), it is a quantity and price per unit row:
-    else if (row.startsWith(RegExp(r'^\d+\s{1}kpl'))) {
-      /*
-        Split by 6-7 whitespaces between quantity and price per unit.
-        An example:
-        2 kpl       2,98 €/kpl
-      */
-      var items = row.split(RegExp(r'\s{6,7}'));
-      var quantity =
-          items[0].substring(0, 2).trim().replaceAll(RegExp(r','), '.');
-
-      var lastProduct = receiptProducts.last;
-      lastProduct.quantity = double.parse(quantity)
-          .ceil(); // e.g. 0.2 -> 1 (round up) or 0.5 -> 1 (round up)
-      lastProduct.pricePerUnit = double.parse(
-          items[1].substring(0, 5).trim().replaceAll(RegExp(r','), '.'));
+    } else if (helper.previousRow == PreviousRow.refund) {
+      _handleRefundRow(helper);
+    } else if (row.contains('alennus') || row.contains('kampanja')) {
+      _handleDiscountOrCampaignRow(row, receiptProducts);
+    } else if (row.startsWith(RegExp(r'^\d+\s{1}kpl'))) {
+      _handleQuantityAndPricePerUnitRow(row, receiptProducts);
     }
 
     /*
@@ -118,6 +70,69 @@ Future<List<ReceiptProduct>> strings2ReceiptProductsFromList(
       receiptProducts.add(product);
     }
   }
+  return receiptProducts;
+}
 
+/// Handle a refund row.
+/// When the previous row is a refund row, skip the next two rows.
+RowHelper _handleRefundRow(RowHelper helper) {
+  if (helper.previousRow == PreviousRow.refund) {
+    if (helper.rowAmount == 1) {
+      helper.rowAmount = 0;
+      helper.previousRow = PreviousRow.notSet;
+    } else {
+      helper.rowAmount++;
+    }
+  }
+  return helper;
+}
+
+/// Handle a discount or campaign row.
+/// Campaign row = usually means that there's a mistake in the previous row BUT not always
+/// -> let's assume that it's a discount row.
+List<ReceiptProduct> _handleDiscountOrCampaignRow(
+    String row, List<ReceiptProduct> receiptProducts) {
+  /*
+    Split by 12-33 whitespaces.
+    An example of a discount row:
+    S-Etu alennus                        0,89-
+  */
+  var splittedItems = row.split(RegExp(r'\s{12,33}'));
+  var discountPrice = double.parse(splittedItems[1]
+      .replaceAll(RegExp(r'\-'), '') // Remove minus sign.
+      .replaceAll(RegExp(r','), '.')); // Replace comma with dot.
+
+  var lastProduct = receiptProducts.last;
+  var origTotalPrice = lastProduct.totalPrice;
+
+  var discountedPrice = (origTotalPrice - discountPrice).toPrecision(2);
+
+  if (lastProduct.quantity > 1) {
+    lastProduct.pricePerUnit =
+        (discountedPrice / lastProduct.quantity).toPrecision(2);
+  }
+  lastProduct.totalPrice = discountedPrice;
+  lastProduct.discountCounted = true;
+
+  return receiptProducts;
+}
+
+/// Handle a quantity and price per unit row.
+/// If a row starts with a digit (e.g. 4 kpl), it is a quantity and price per unit row.
+List<ReceiptProduct> _handleQuantityAndPricePerUnitRow(
+    String row, List<ReceiptProduct> receiptProducts) {
+  /*
+    Split by 6-7 whitespaces between quantity and price per unit.
+    An example:
+    2 kpl       2,98 €/kpl
+  */
+  var items = row.split(RegExp(r'\s{6,7}'));
+  var quantity = items[0].substring(0, 2).trim().replaceAll(RegExp(r','), '.');
+
+  var lastProduct = receiptProducts.last;
+  lastProduct.quantity = double.parse(quantity)
+      .ceil(); // e.g. 0.2 -> 1 (round up) or 0.5 -> 1 (round up)
+  lastProduct.pricePerUnit = double.parse(
+      items[1].substring(0, 5).trim().replaceAll(RegExp(r','), '.'));
   return receiptProducts;
 }
