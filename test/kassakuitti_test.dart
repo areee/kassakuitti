@@ -33,4 +33,34 @@ void main() {
           SelectedFileFormat.excel);
     });
   });
+
+  group('Read example cash receipt', () {
+    final kassakuitti =
+        Kassakuitti('example/cash_receipt_example.txt', 'test.html');
+    setUp(() {
+      // Additional setup goes here.
+    });
+
+    test('Read receipt products', (() {
+      kassakuitti.readReceiptProducts().then((receiptProducts) {
+        expect(receiptProducts.length, 4);
+        expect(receiptProducts[0].name, 'peruna-sipulisekoitus');
+        expect(receiptProducts[0].totalPrice, 0.85);
+        expect(receiptProducts[0].quantity, 1);
+        expect(receiptProducts[0].pricePerUnit, null);
+        expect(receiptProducts[1].name, 'ruusukaali');
+        expect(receiptProducts[1].totalPrice, 5.96);
+        expect(receiptProducts[1].quantity, 2);
+        expect(receiptProducts[1].pricePerUnit, 2.98);
+        expect(receiptProducts[2].name, 'pakkausmateriaalit');
+        expect(receiptProducts[2].totalPrice, 0.6);
+        expect(receiptProducts[2].quantity, 1);
+        expect(receiptProducts[2].pricePerUnit, null);
+        expect(receiptProducts[3].name, 'toimitusmaksu');
+        expect(receiptProducts[3].totalPrice, 10.9);
+        expect(receiptProducts[3].quantity, 1);
+        expect(receiptProducts[3].pricePerUnit, null);
+      });
+    }));
+  });
 }
