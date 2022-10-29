@@ -4,6 +4,18 @@ import 'package:kassakuitti/src/models/receipt_product.dart';
 import 'package:kassakuitti/src/utils/extensions/double_extension.dart';
 import 'package:kassakuitti/src/utils/row_helper.dart';
 
+/// Read receipt products from text file.
+Future<List<ReceiptProduct>> strings2ReceiptProducts(String? filePath) async {
+  if (filePath == null) {
+    throw Exception('Text file path is null');
+  }
+  var stringList = await _readReceiptFile(filePath);
+  if (stringList == null) {
+    throw Exception('Text file is empty');
+  }
+  return _strings2ReceiptProductsFromList(stringList);
+}
+
 /// Read a text file and return as a list of rows.
 Future<List<String>?> _readReceiptFile(String filePath) async {
   File file = File(filePath);
@@ -14,30 +26,18 @@ Future<List<String>?> _readReceiptFile(String filePath) async {
   }
 }
 
-/// Read receipt products from text file.
-Future<List<ReceiptProduct>> strings2ReceiptProducts(String? filePath) async {
-  if (filePath == null) {
-    throw Exception('Text file path is null');
-  }
-  var stringList = await _readReceiptFile(filePath);
-  if (stringList == null) {
-    throw Exception('Text file is empty');
-  }
-  return strings2ReceiptProductsFromList(stringList);
-}
-
 /// Read receipt products from a list of strings.
-Future<List<ReceiptProduct>> strings2ReceiptProductsFromList(
+Future<List<ReceiptProduct>> _strings2ReceiptProductsFromList(
     List<String> stringList) async {
   var helper = RowHelper();
   var receiptProducts = <ReceiptProduct>[];
 
   for (var row in stringList) {
-    row = row.trim();
     // If row is empty, skip it.
     if (row.isEmpty) {
       continue;
     }
+    row = row.trim();
     row = row.toLowerCase();
     // Replace non-breaking space with a normal space
     row = row.replaceAll(RegExp(r'\u00a0'), ' ');
@@ -45,9 +45,7 @@ Future<List<ReceiptProduct>> strings2ReceiptProductsFromList(
     // Do not handle sum rows (after a row of strokes):
     if (row.contains('----------')) {
       break;
-    }
-    // Refund row:
-    else if (row.contains('palautus')) {
+    } else if (row.contains('palautus')) {
       helper.previousRow = PreviousRow.refund;
     } else if (helper.previousRow == PreviousRow.refund) {
       _handleRefundRow(helper);
@@ -55,19 +53,8 @@ Future<List<ReceiptProduct>> strings2ReceiptProductsFromList(
       _handleDiscountOrCampaignRow(row, receiptProducts);
     } else if (row.startsWith(RegExp(r'^\d+\s{1}kpl'))) {
       _handleQuantityAndPricePerUnitRow(row, receiptProducts);
-    }
-
-    /*
-      A "normal" row. An example:
-      PERUNA-SIPULISEKOITUS                0,85
-    */
-    else {
-      var items = row.split(RegExp(r'\s{8,35}'));
-      var name = items[0];
-      var price = double.parse(items[1].trim().replaceAll(RegExp(r','), '.'));
-
-      var product = ReceiptProduct(name: name, totalPrice: price);
-      receiptProducts.add(product);
+    } else {
+      _handleNormalRow(row, receiptProducts);
     }
   }
   return receiptProducts;
@@ -134,5 +121,18 @@ List<ReceiptProduct> _handleQuantityAndPricePerUnitRow(
       .ceil(); // e.g. 0.2 -> 1 (round up) or 0.5 -> 1 (round up)
   lastProduct.pricePerUnit = double.parse(
       items[1].substring(0, 5).trim().replaceAll(RegExp(r','), '.'));
+  return receiptProducts;
+}
+
+/// Handle a "normal" row. An example:
+/// PERUNA-SIPULISEKOITUS                0,85
+List<ReceiptProduct> _handleNormalRow(
+    String row, List<ReceiptProduct> receiptProducts) {
+  var items = row.split(RegExp(r'\s{8,35}'));
+  var name = items[0];
+  var price = double.parse(items[1].trim().replaceAll(RegExp(r','), '.'));
+
+  var product = ReceiptProduct(name: name, totalPrice: price);
+  receiptProducts.add(product);
   return receiptProducts;
 }
