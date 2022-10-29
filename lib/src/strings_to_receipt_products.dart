@@ -13,7 +13,7 @@ Future<List<ReceiptProduct>> strings2ReceiptProducts(String? filePath) async {
   if (stringList == null) {
     throw Exception('Text file is empty');
   }
-  return _strings2ReceiptProductsFromList(stringList);
+  return await _strings2ReceiptProductsFromList(stringList);
 }
 
 /// Read a text file and return as a list of rows.
@@ -90,9 +90,7 @@ List<ReceiptProduct> _handleDiscountOrCampaignRow(
       .replaceAll(RegExp(r','), '.')); // Replace comma with dot.
 
   var lastProduct = receiptProducts.last;
-  var origTotalPrice = lastProduct.totalPrice;
-
-  var discountedPrice = (origTotalPrice - discountPrice).toPrecision(2);
+  var discountedPrice = (lastProduct.totalPrice - discountPrice).toPrecision(2);
 
   if (lastProduct.quantity > 1) {
     lastProduct.pricePerUnit =
@@ -117,8 +115,8 @@ List<ReceiptProduct> _handleQuantityAndPricePerUnitRow(
   var quantity = items[0].substring(0, 2).trim().replaceAll(RegExp(r','), '.');
 
   var lastProduct = receiptProducts.last;
-  lastProduct.quantity = double.parse(quantity)
-      .ceil(); // e.g. 0.2 -> 1 (round up) or 0.5 -> 1 (round up)
+  // ceiling means e.g. 0.2 -> 1 (round up) or 0.5 -> 1 (round up)
+  lastProduct.quantity = double.parse(quantity).ceil();
   lastProduct.pricePerUnit = double.parse(
       items[1].substring(0, 5).trim().replaceAll(RegExp(r','), '.'));
   return receiptProducts;
@@ -129,10 +127,9 @@ List<ReceiptProduct> _handleQuantityAndPricePerUnitRow(
 List<ReceiptProduct> _handleNormalRow(
     String row, List<ReceiptProduct> receiptProducts) {
   var items = row.split(RegExp(r'\s{8,35}'));
-  var name = items[0];
-  var price = double.parse(items[1].trim().replaceAll(RegExp(r','), '.'));
-
-  var product = ReceiptProduct(name: name, totalPrice: price);
+  var product = ReceiptProduct(
+      name: items[0],
+      totalPrice: double.parse(items[1].trim().replaceAll(RegExp(r','), '.')));
   receiptProducts.add(product);
   return receiptProducts;
 }

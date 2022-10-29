@@ -22,6 +22,6 @@ class Kassakuitti {
 
   /// Read receipt products from text file.
   Future<List<ReceiptProduct>> readReceiptProducts() async {
-    return strings2ReceiptProducts(textFilePath);
+    return await strings2ReceiptProducts(textFilePath);
   }
 }
