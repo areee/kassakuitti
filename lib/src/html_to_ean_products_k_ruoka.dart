@@ -26,17 +26,11 @@ void _html2EANProductsFromDocument(
   }
   _handleNormalProducts(htmlDocument, eanProducts);
 
-  _handleHomeDeliveryDetails(htmlDocument, eanProducts);
+  var orderDetailsSection =
+      htmlDocument.getElementsByClassName('old-order-details')[0];
+  _handleHomeDeliveryDetails(orderDetailsSection, eanProducts);
 
-  // Get packaging material costs
-  // TODO
-
-  /**
-   * Get packaging material price.
-   * - Start where the price starts, e.g. 0,75
-   * - End before unit (euros per box)
-   */
-  // TODO
+  _handlePackagingMaterialCosts(orderDetailsSection, eanProducts);
 }
 
 /// Handle substituted products.
@@ -122,9 +116,7 @@ void _handleNormalProducts(
 
 /// Handle home delivery details.
 void _handleHomeDeliveryDetails(
-    Document htmlDocument, List<EANProduct> eanProducts) {
-  var orderDetailsSection =
-      htmlDocument.getElementsByClassName('old-order-details')[0];
+    Element orderDetailsSection, List<EANProduct> eanProducts) {
   var homeDeliveryPriceSection = orderDetailsSection.children[0];
   eanProducts.add(
     EANProduct(
@@ -132,6 +124,33 @@ void _handleHomeDeliveryDetails(
       totalPrice: double.parse(homeDeliveryPriceSection.children[1].text
           .replaceAll(' €', '')
           .replaceAll(RegExp(r','), '.')),
+    ),
+  );
+}
+
+void _handlePackagingMaterialCosts(
+    Element orderDetailsSection, List<EANProduct> eanProducts) {
+  // Get packaging material costs
+  var packagingMaterialTexts = orderDetailsSection.children[1].children[0].text;
+  /**
+   * Get packaging material price.
+   * - Start where the price starts, e.g. 0,75
+   * - End before unit (euros per box)
+   */
+  var packagingMaterialPrice = packagingMaterialTexts
+      .substring(packagingMaterialTexts.indexOf(RegExp(r'\d+\,\d+')),
+          packagingMaterialTexts.indexOf('€/ltk'))
+      .trim();
+  eanProducts.add(
+    EANProduct(
+      name: packagingMaterialTexts
+          .substring(0, packagingMaterialTexts.indexOf(':'))
+          .trim(),
+      quantity: -1,
+      pricePerUnit:
+          double.parse(packagingMaterialPrice.replaceAll(RegExp(r','), '.')),
+      moreDetails:
+          'TODO: fill in the amount of packaging materials and the total price.',
     ),
   );
 }
