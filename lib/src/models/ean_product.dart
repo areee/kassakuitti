@@ -16,6 +16,11 @@ class EANProduct {
 
   @override
   String toString() {
-    return '$quantity x $name${quantity > 1 ? ' ($pricePerUnit e / pcs)' : ''} = $totalPrice e';
+    return '$quantity x'
+        ' $name'
+        '${quantity != 1 ? ' ($pricePerUnit e / pcs)' : ''}'
+        ' = $totalPrice e.'
+        '${eanCode.isNotEmpty ? ' EAN: $eanCode.' : ''}'
+        '${moreDetails.isNotEmpty ? ' More details: $moreDetails' : ''}';
   }
 }

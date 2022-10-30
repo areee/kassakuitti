@@ -1,5 +1,6 @@
 import 'package:kassakuitti/src/models/receipt_product.dart';
 import 'package:kassakuitti/src/utils/extensions/double_extension.dart';
+import 'package:kassakuitti/src/utils/extensions/string_extension.dart';
 import 'package:kassakuitti/src/utils/reader_helper.dart';
 import 'package:kassakuitti/src/utils/row_helper.dart';
 
@@ -71,7 +72,7 @@ void _handleDiscountOrCampaignRow(
   var splittedItems = row.split(RegExp(r'\s{12,33}'));
   var discountPrice = double.parse(splittedItems[1]
       .replaceAll(RegExp(r'\-'), '') // Remove minus sign.
-      .replaceAll(RegExp(r','), '.')); // Replace comma with dot.
+      .replaceAllCommasWithDots());
 
   var lastProduct = receiptProducts.last;
   var discountedPrice = (lastProduct.totalPrice - discountPrice).toPrecision(2);
@@ -94,13 +95,12 @@ void _handleQuantityAndPricePerUnitRow(
     2 kpl       2,98 €/kpl
   */
   var items = row.split(RegExp(r'\s{6,7}'));
-  var quantity = items[0].substring(0, 2).trim().replaceAll(RegExp(r','), '.');
+  var quantity = items[0].substring(0, 2).trim().replaceAllCommasWithDots();
 
   var lastProduct = receiptProducts.last;
-  // ceiling means e.g. 0.2 -> 1 (round up) or 0.5 -> 1 (round up)
   lastProduct.quantity = double.parse(quantity).ceil();
-  lastProduct.pricePerUnit = double.parse(
-      items[1].substring(0, 5).trim().replaceAll(RegExp(r','), '.'));
+  lastProduct.pricePerUnit =
+      double.parse(items[1].substring(0, 5).trim().replaceAllCommasWithDots());
 }
 
 /// Handle a "normal" row. An example:
@@ -109,6 +109,6 @@ void _handleNormalRow(String row, List<ReceiptProduct> receiptProducts) {
   var items = row.split(RegExp(r'\s{8,35}'));
   var product = ReceiptProduct(
       name: items[0],
-      totalPrice: double.parse(items[1].trim().replaceAll(RegExp(r','), '.')));
+      totalPrice: double.parse(items[1].trim().replaceAllCommasWithDots()));
   receiptProducts.add(product);
 }

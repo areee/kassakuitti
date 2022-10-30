@@ -1,6 +1,7 @@
 import 'package:html/dom.dart';
 import 'package:kassakuitti/src/models/ean_product.dart';
 import 'package:kassakuitti/src/utils/extensions/double_extension.dart';
+import 'package:kassakuitti/src/utils/extensions/string_extension.dart';
 import 'package:kassakuitti/src/utils/reader_helper.dart';
 
 /// Read EAN products from [String] filePath and returns a [Future] of [List] of [EANProduct].
@@ -35,27 +36,20 @@ void _handleSubstitutedProducts(
     var substitutedProducts = listOfSubstitutedElements.first;
     for (var productRow in substitutedProducts.children) {
       var productItem = productRow.children[1].children[0];
-      var productQuantity = productItem.children[0].children[3].children[0].text
-          .replaceAll('kpl', '')
-          .replaceAll('kg', '')
-          .replaceAll(',', '.');
-      var quantity = double.parse(productQuantity)
-          .ceil(); // e.g. 0.2 -> 1 (round up) or 0.5 -> 1 (round up)
+      var quantity = double.parse(productItem
+              .children[0].children[3].children[0].text
+              .removeAllKplsAndKgs()
+              .replaceAllCommasWithDots())
+          .ceil();
       var priceElement =
           productItem.children[0].children[3].children[1].children[0];
-      var finalPrice = StringBuffer();
-      for (var i = 0; i < priceElement.children.length; i++) {
-        if (i != 3) {
-          finalPrice.write(priceElement.children[i].text);
-        }
-      }
       var productPrice =
-          double.parse(finalPrice.toString().replaceAll(RegExp(r','), '.'));
+          double.parse(_getFinalPrice(priceElement).replaceAllCommasWithDots());
       eanProducts.add(
         EANProduct(
           name: productItem.children[0].children[2].children[0].children[0].text
               .trim()
-              .replaceAll('\n', '')
+              .removeAllNewLines()
               .replaceAll(RegExp(r'\s{40,50}'), ' '),
           totalPrice: productPrice,
           quantity: quantity,
@@ -77,27 +71,20 @@ void _handleNormalProducts(
     var itemListing = department.children[1];
     for (var productRow in itemListing.children) {
       var productItem = productRow.children[0];
-      var productQuantity = productItem.children[0].children[2].children[0].text
-          .replaceAll('kpl', '')
-          .replaceAll('kg', '')
-          .replaceAll(',', '.');
-      var quantity = double.parse(productQuantity)
-          .ceil(); // e.g. 0.2 -> 1 (round up) or 0.5 -> 1 (round up)
+      var quantity = double.parse(productItem
+              .children[0].children[2].children[0].text
+              .removeAllKplsAndKgs()
+              .replaceAllCommasWithDots())
+          .ceil();
       var priceElement =
           productItem.children[0].children[2].children[1].children[0];
-      var finalPrice = StringBuffer();
-      for (var i = 0; i < priceElement.children.length; i++) {
-        if (i != 3) {
-          finalPrice.write(priceElement.children[i].text);
-        }
-      }
       var productPrice =
-          double.parse(finalPrice.toString().replaceAll(RegExp(r','), '.'));
+          double.parse(_getFinalPrice(priceElement).replaceAllCommasWithDots());
       eanProducts.add(
         EANProduct(
           name: productItem.children[0].children[1].children[0].children[0].text
               .trim()
-              .replaceAll('\n', '')
+              .removeAllNewLines()
               .replaceAll(RegExp(r'\s{40,50}'), ' '),
           totalPrice: productPrice,
           quantity: quantity,
@@ -110,6 +97,18 @@ void _handleNormalProducts(
   }
 }
 
+/// Get the final price of a product.
+String _getFinalPrice(Element priceElement) {
+  var childrenOfPriceElement = priceElement.children;
+  var finalPrice = StringBuffer();
+  for (var i = 0; i < childrenOfPriceElement.length; i++) {
+    if (i != 3) {
+      finalPrice.write(childrenOfPriceElement[i].text);
+    }
+  }
+  return finalPrice.toString();
+}
+
 /// Handle home delivery details.
 void _handleHomeDeliveryDetails(
     Element orderDetailsSection, List<EANProduct> eanProducts) {
@@ -118,8 +117,8 @@ void _handleHomeDeliveryDetails(
     EANProduct(
       name: homeDeliveryPriceSection.children[0].text,
       totalPrice: double.parse(homeDeliveryPriceSection.children[1].text
-          .replaceAll(' €', '')
-          .replaceAll(RegExp(r','), '.')),
+          .removeAllEuros()
+          .replaceAllCommasWithDots()),
     ),
   );
 }
@@ -143,7 +142,7 @@ void _handlePackagingMaterialCosts(
           .substring(packagingMaterialTexts.indexOf(RegExp(r'\d+\,\d+')),
               packagingMaterialTexts.indexOf('€/ltk'))
           .trim()
-          .replaceAll(RegExp(r','), '.')),
+          .replaceAllCommasWithDots()),
       moreDetails:
           'TODO: fill in the amount of packaging materials and the total price.',
     ),
