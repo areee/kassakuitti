@@ -1,28 +1,15 @@
-import 'dart:io';
-
 import 'package:html/dom.dart';
-import 'package:html/parser.dart';
 import 'package:kassakuitti/src/models/ean_product.dart';
 import 'package:kassakuitti/src/utils/extensions/double_extension.dart';
+import 'package:kassakuitti/src/utils/reader_helper.dart';
 
 /// Read EAN products from html file.
 Future<List<EANProduct>> html2EANProducts(String? filePath) async {
   if (filePath == null) {
     throw Exception('HTML file path is null');
   }
-  var htmlDocument = await _readHTMLFile(filePath);
+  var htmlDocument = await readHTMLFile(filePath);
   return await _html2EANProductsFromDocument(htmlDocument);
-}
-
-/// Read a HTML file and return as a [Document].
-Future<Document> _readHTMLFile(String filePath) async {
-  try {
-    var file = File(filePath);
-    var html = await file.readAsString();
-    return parse(html);
-  } on Exception {
-    rethrow;
-  }
 }
 
 /// Read EAN products from a [Document] and return as a [List<EANProduct>].

@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:kassakuitti/src/models/receipt_product.dart';
 import 'package:kassakuitti/src/utils/extensions/double_extension.dart';
+import 'package:kassakuitti/src/utils/reader_helper.dart';
 import 'package:kassakuitti/src/utils/row_helper.dart';
 
 /// Read receipt products from text file.
@@ -9,26 +8,16 @@ Future<List<ReceiptProduct>> strings2ReceiptProducts(String? filePath) async {
   if (filePath == null) {
     throw Exception('Text file path is null');
   }
-  var stringList = await _readReceiptFile(filePath);
-  return await _strings2ReceiptProductsFromList(stringList);
-}
-
-/// Read a text file and return as a [List<String>].
-Future<List<String>> _readReceiptFile(String filePath) async {
-  try {
-    var file = File(filePath);
-    return await file.readAsLines();
-  } on Exception {
-    rethrow;
-  }
+  var stringList = await readTextFile(filePath);
+  var receiptProducts = <ReceiptProduct>[];
+  _strings2ReceiptProductsFromList(stringList, receiptProducts);
+  return receiptProducts;
 }
 
 /// Read receipt products from a list of strings.
-Future<List<ReceiptProduct>> _strings2ReceiptProductsFromList(
-    List<String> stringList) async {
+void _strings2ReceiptProductsFromList(
+    List<String> stringList, List<ReceiptProduct> receiptProducts) {
   var helper = RowHelper();
-  var receiptProducts = <ReceiptProduct>[];
-
   for (var row in stringList) {
     // If row is empty, skip it.
     if (row.isEmpty) {
@@ -54,12 +43,11 @@ Future<List<ReceiptProduct>> _strings2ReceiptProductsFromList(
       _handleNormalRow(row, receiptProducts);
     }
   }
-  return receiptProducts;
 }
 
 /// Handle a refund row.
 /// When the previous row is a refund row, skip the next two rows.
-RowHelper _handleRefundRow(RowHelper helper) {
+void _handleRefundRow(RowHelper helper) {
   if (helper.previousRow == PreviousRow.refund) {
     if (helper.rowAmount == 1) {
       helper.rowAmount = 0;
@@ -68,13 +56,12 @@ RowHelper _handleRefundRow(RowHelper helper) {
       helper.rowAmount++;
     }
   }
-  return helper;
 }
 
 /// Handle a discount or campaign row.
 /// Campaign row = usually means that there's a mistake in the previous row BUT not always
 /// -> let's assume that it's a discount row.
-List<ReceiptProduct> _handleDiscountOrCampaignRow(
+void _handleDiscountOrCampaignRow(
     String row, List<ReceiptProduct> receiptProducts) {
   /*
     Split by 12-33 whitespaces.
@@ -95,13 +82,11 @@ List<ReceiptProduct> _handleDiscountOrCampaignRow(
   }
   lastProduct.totalPrice = discountedPrice;
   lastProduct.discountCounted = true;
-
-  return receiptProducts;
 }
 
 /// Handle a quantity and price per unit row.
 /// If a row starts with a digit (e.g. 4 kpl), it is a quantity and price per unit row.
-List<ReceiptProduct> _handleQuantityAndPricePerUnitRow(
+void _handleQuantityAndPricePerUnitRow(
     String row, List<ReceiptProduct> receiptProducts) {
   /*
     Split by 6-7 whitespaces between quantity and price per unit.
@@ -116,17 +101,14 @@ List<ReceiptProduct> _handleQuantityAndPricePerUnitRow(
   lastProduct.quantity = double.parse(quantity).ceil();
   lastProduct.pricePerUnit = double.parse(
       items[1].substring(0, 5).trim().replaceAll(RegExp(r','), '.'));
-  return receiptProducts;
 }
 
 /// Handle a "normal" row. An example:
 /// PERUNA-SIPULISEKOITUS                0,85
-List<ReceiptProduct> _handleNormalRow(
-    String row, List<ReceiptProduct> receiptProducts) {
+void _handleNormalRow(String row, List<ReceiptProduct> receiptProducts) {
   var items = row.split(RegExp(r'\s{8,35}'));
   var product = ReceiptProduct(
       name: items[0],
       totalPrice: double.parse(items[1].trim().replaceAll(RegExp(r','), '.')));
   receiptProducts.add(product);
-  return receiptProducts;
 }

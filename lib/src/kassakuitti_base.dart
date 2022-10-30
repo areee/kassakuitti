@@ -1,4 +1,4 @@
-import 'package:kassakuitti/src/html_to_ean_products_s-kaupat.dart' as s_kaupat;
+import 'package:kassakuitti/src/html_to_ean_products_s_kaupat.dart' as s_kaupat;
 import 'package:kassakuitti/src/models/ean_product.dart';
 import 'package:kassakuitti/src/models/receipt_product.dart';
 import 'package:kassakuitti/src/strings_to_receipt_products.dart';
