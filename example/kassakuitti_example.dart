@@ -11,4 +11,10 @@ void main() async {
   for (var element in receiptProducts) {
     print(element);
   }
+
+  var eanProducts = await kassakuitti.readEANProducts();
+
+  for (var element in eanProducts) {
+    print(element);
+  }
 }

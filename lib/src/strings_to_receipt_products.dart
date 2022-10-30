@@ -10,18 +10,15 @@ Future<List<ReceiptProduct>> strings2ReceiptProducts(String? filePath) async {
     throw Exception('Text file path is null');
   }
   var stringList = await _readReceiptFile(filePath);
-  if (stringList == null) {
-    throw Exception('Text file is empty');
-  }
   return await _strings2ReceiptProductsFromList(stringList);
 }
 
-/// Read a text file and return as a list of rows.
-Future<List<String>?> _readReceiptFile(String filePath) async {
-  File file = File(filePath);
+/// Read a text file and return as a [List<String>].
+Future<List<String>> _readReceiptFile(String filePath) async {
   try {
+    var file = File(filePath);
     return await file.readAsLines();
-  } on FileSystemException {
+  } on Exception {
     rethrow;
   }
 }
