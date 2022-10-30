@@ -1,3 +1,4 @@
+import 'package:kassakuitti/src/html_to_ean_products_k_ruoka.dart' as k_ruoka;
 import 'package:kassakuitti/src/html_to_ean_products_s_kaupat.dart' as s_kaupat;
 import 'package:kassakuitti/src/models/ean_product.dart';
 import 'package:kassakuitti/src/models/receipt_product.dart';
@@ -31,8 +32,6 @@ class Kassakuitti {
   Future<List<EANProduct>> readEANProducts() async {
     return selectedShop.value == SelectedShop.sKaupat.value
         ? await s_kaupat.html2EANProducts(htmlFilePath)
-        :
-        // TODO: Add K-ruoka
-        throw Exception('Selected shop is not supported');
+        : await k_ruoka.html2EANProducts(htmlFilePath);
   }
 }
