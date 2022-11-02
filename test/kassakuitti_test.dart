@@ -56,11 +56,35 @@ void main() {
         expect(receiptProducts[2].totalPrice, 0.6);
         expect(receiptProducts[2].quantity, 1);
         expect(receiptProducts[2].pricePerUnit, null);
-        expect(receiptProducts[3].name, 'toimitusmaksu');
+        expect(receiptProducts[3].name, 'toimitusmaksu 10,90');
         expect(receiptProducts[3].totalPrice, 10.9);
         expect(receiptProducts[3].quantity, 1);
         expect(receiptProducts[3].pricePerUnit, null);
       });
     }));
+  });
+
+  group('Kassakuitti with S-kaupat', (() {
+    final kassakuitti =
+        Kassakuitti(null, 'test.html', selectedShop: SelectedShop.sKaupat);
+    setUp(() {
+      // Additional setup goes here.
+    });
+
+    test('Null text file path throws an argument error', () {
+      expect(() => kassakuitti.readReceiptProducts(), throwsArgumentError);
+    });
+  }));
+
+  group('Kassakuitti with K-ruoka', () {
+    final kassakuitti =
+        Kassakuitti(null, 'test.html', selectedShop: SelectedShop.kRuoka);
+    setUp(() {
+      // Additional setup goes here.
+    });
+
+    test('Read receipt products throws an argument error', () {
+      expect(() => kassakuitti.readReceiptProducts(), throwsArgumentError);
+    });
   });
 }

@@ -5,11 +5,12 @@ import 'package:kassakuitti/src/utils/reader_helper.dart';
 import 'package:kassakuitti/src/utils/row_helper.dart';
 
 /// Read receipt products from text file.
-Future<List<ReceiptProduct>> strings2ReceiptProducts(String? filePath) async {
-  if (filePath == null) {
-    throw Exception('Text file path is null');
+Future<List<ReceiptProduct>> strings2ReceiptProducts(
+    String? textFilePath) async {
+  if (textFilePath == null) {
+    throw ArgumentError('textFilePath should not be null');
   }
-  var stringList = await readTextFile(filePath);
+  var stringList = await readTextFile(textFilePath);
   var receiptProducts = <ReceiptProduct>[];
   _strings2ReceiptProductsFromList(stringList, receiptProducts);
   return receiptProducts;

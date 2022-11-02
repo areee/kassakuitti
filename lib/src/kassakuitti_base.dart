@@ -25,7 +25,12 @@ class Kassakuitti {
 
   /// Read receipt products from text file.
   Future<List<ReceiptProduct>> readReceiptProducts() async {
-    return await strings2ReceiptProducts(textFilePath);
+    if (selectedShop == SelectedShop.sKaupat) {
+      return await strings2ReceiptProducts(textFilePath);
+    } else {
+      throw ArgumentError(
+          'selectedShop should be ${SelectedShop.sKaupat.value}, but it was ${selectedShop.value}.');
+    }
   }
 
   /// Read EAN products from html file.
