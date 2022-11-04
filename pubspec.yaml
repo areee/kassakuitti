@@ -6,7 +6,7 @@ homepage: https://github.com/areee/kassakuitti
 publish_to: 'none' # for now, do not publish the package into pub.dev
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
+  sdk: '>=2.18.4 <3.0.0'
 
 dependencies:
   html: ^0.15.1
