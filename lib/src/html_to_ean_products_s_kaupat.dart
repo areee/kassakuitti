@@ -20,9 +20,9 @@ void _html2EANProductsFromDocument(
     Document htmlDocument, List<EANProduct> eanProducts) {
   var allProductsDiv = htmlDocument.body!.children[1].children[1].children[1]
       .children[0].children[0].children[0].children[5];
-
-  for (var i = 1; i < allProductsDiv.children.length; i++) {
-    var product = allProductsDiv.children[i];
+  var childrenOfAllProductsDiv = allProductsDiv.children;
+  for (var i = 1; i < childrenOfAllProductsDiv.length; i++) {
+    var product = childrenOfAllProductsDiv[i];
     var productPrice = double.parse(product.children[0].children[0].children[1]
         .children[1].children[1].children[1].text
         .trim()
@@ -37,7 +37,7 @@ void _html2EANProductsFromDocument(
           .children[0].children[0].children[1].children[0].children[0].text
           .trim()
           .removeAllNewLines()
-          .replaceAll(RegExp(r'\s{30}'), ' '),
+          .replaceAllWhitespacesWithSingleSpace(),
       totalPrice: productPrice,
       quantity: quantity,
       eanCode: product.attributes['data-product-id'] ?? '',

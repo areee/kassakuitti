@@ -15,6 +15,11 @@ extension StringExtension on String {
     return replaceAll('\n', '');
   }
 
+  // Replace all whitespaces with a single space.
+  String replaceAllWhitespacesWithSingleSpace() {
+    return replaceAll(RegExp(r'\s{2,}'), ' ');
+  }
+
   /// Remove all kpls and kgs from the string.
   String removeAllKplsAndKgs() {
     return replaceAll('kpl', '').replaceAll('kg', '');

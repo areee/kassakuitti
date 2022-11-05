@@ -50,7 +50,7 @@ void _handleSubstitutedProducts(
           name: productItem.children[0].children[2].children[0].children[0].text
               .trim()
               .removeAllNewLines()
-              .replaceAll(RegExp(r'\s{40,50}'), ' '),
+              .replaceAllWhitespacesWithSingleSpace(),
           totalPrice: productPrice,
           quantity: quantity,
           eanCode: productItem.id.replaceAll('department-product-item-', ''),
@@ -85,7 +85,7 @@ void _handleNormalProducts(
           name: productItem.children[0].children[1].children[0].children[0].text
               .trim()
               .removeAllNewLines()
-              .replaceAll(RegExp(r'\s{40,50}'), ' '),
+              .replaceAllWhitespacesWithSingleSpace(),
           totalPrice: productPrice,
           quantity: quantity,
           eanCode: productItem.id.replaceAll('department-product-item-', ''),
