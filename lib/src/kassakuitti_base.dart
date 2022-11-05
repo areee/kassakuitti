@@ -1,3 +1,5 @@
+import 'package:kassakuitti/src/export_into_csv.dart';
+import 'package:kassakuitti/src/export_into_excel.dart';
 import 'package:kassakuitti/src/html_to_ean_products_k_ruoka.dart' as k_ruoka;
 import 'package:kassakuitti/src/html_to_ean_products_s_kaupat.dart' as s_kaupat;
 import 'package:kassakuitti/src/models/ean_product.dart';
@@ -38,5 +40,34 @@ class Kassakuitti {
     return selectedShop.value == SelectedShop.sKaupat.value
         ? await s_kaupat.html2EANProducts(htmlFilePath)
         : await k_ruoka.html2EANProducts(htmlFilePath);
+  }
+
+  /// Export recept products and EAN products into CSV or Excel file.
+  Future<void> export(List<ReceiptProduct>? receiptProducts,
+      List<EANProduct> eanProducts) async {
+    if (selectedShop == SelectedShop.sKaupat) {
+      // Selected shop is S-kaupat
+      if (receiptProducts == null) {
+        throw ArgumentError('receiptProducts should not be null.');
+      }
+      if (selectedFileFormat == SelectedFileFormat.csv) {
+        // Export into CSV file
+        exportReceiptProductsIntoCsv(receiptProducts);
+        exportEANProductsIntoCsv(eanProducts, selectedShop);
+      } else {
+        // Export into Excel file
+        exportReceiptProductsIntoExcel(receiptProducts);
+        exportEANProductsIntoExcel(eanProducts);
+      }
+    } else {
+      // Selected shop is K-ruoka
+      if (selectedFileFormat == SelectedFileFormat.csv) {
+        // Export into CSV file
+        exportEANProductsIntoCsv(eanProducts, selectedShop);
+      } else {
+        // Export into Excel file
+        exportEANProductsIntoExcel(eanProducts);
+      }
+    }
   }
 }
