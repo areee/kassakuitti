@@ -2,7 +2,7 @@ import 'package:kassakuitti/kassakuitti.dart';
 import 'package:kassakuitti/src/utils/selected_shop_helper.dart';
 
 void main() async {
-  var selectedShop = SelectedShop.sKaupat; // TODO: Change to your shop
+  var selectedShop = SelectedShop.kRuoka; // TODO: Change to your shop
   String htmlFilePath;
 
   if (selectedShop == SelectedShop.sKaupat) {
