@@ -2,31 +2,36 @@ import 'package:kassakuitti/kassakuitti.dart';
 import 'package:kassakuitti/src/utils/selected_shop_helper.dart';
 
 void main() async {
-  var selectedShop = SelectedShop.kRuoka; // TODO: Change to your shop
+  var selectedShop = SelectedShop.sKaupat; // TODO: Change to your shop
   String htmlFilePath;
 
   if (selectedShop == SelectedShop.sKaupat) {
-    print('Selected shop is S-kaupat');
+    print('Selected shop is ${SelectedShop.sKaupat.value}');
 
     var textFilePath = 'example/cash_receipt_example.txt';
-    htmlFilePath = '/path/to/htmlFile.html'; // TODO: Add an example html file
+    htmlFilePath = 'example/s-kaupat_example.html';
     var kassakuitti = Kassakuitti(textFilePath, htmlFilePath,
         selectedShop: SelectedShop.sKaupat);
     print(kassakuitti);
 
     var receiptProducts = await kassakuitti.readReceiptProducts();
 
+    print('Receipt products:');
+
     for (var element in receiptProducts) {
       print(element);
     }
+    print('');
 
     var eanProducts = await kassakuitti.readEANProducts();
+
+    print('EAN products:');
 
     for (var element in eanProducts) {
       print(element);
     }
   } else {
-    print('Selected shop is K-ruoka');
+    print('Selected shop is ${SelectedShop.kRuoka.value}');
 
     htmlFilePath = 'example/k-ruoka_example.html';
     var kassakuitti =
@@ -34,6 +39,8 @@ void main() async {
     print(kassakuitti);
 
     var eanProducts = await kassakuitti.readEANProducts();
+
+    print('EAN products:');
 
     for (var element in eanProducts) {
       print(element);
