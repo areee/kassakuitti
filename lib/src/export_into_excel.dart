@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:excel/excel.dart';
+import 'package:kassakuitti/src/constants.dart';
 import 'package:kassakuitti/src/models/ean_product.dart';
 import 'package:kassakuitti/src/models/receipt_product.dart';
 import 'package:kassakuitti/src/utils/date_helper.dart';
@@ -8,17 +9,6 @@ import 'package:kassakuitti/src/utils/extensions/sheet_extension.dart';
 import 'package:kassakuitti/src/utils/home_directory_helper.dart';
 import 'package:kassakuitti/src/utils/selected_shop_helper.dart';
 import 'package:path/path.dart';
-
-/// Export file path.
-const String _exportFilePath = '~/Downloads'; // TODO: Add this to settings
-
-const List<String> _header = [
-  'Name',
-  'Amount',
-  'Price per unit',
-  'Total price',
-  'EAN code'
-];
 
 /// Export receipt products into Excel (xlsx) file.
 Future<void> exportReceiptProductsIntoExcel(
@@ -28,13 +18,14 @@ Future<void> exportReceiptProductsIntoExcel(
 
   // Write the header.
   var discountCounted = false;
-  var newHeader = [..._header];
+  var finalHeader = [...header];
+
   // If there's any product with discount, add discount column to Excel file.
   if (receiptProducts.any((product) => product.discountCounted)) {
     discountCounted = true;
-    newHeader.add("Discount counted");
+    finalHeader.add("Discount counted");
   }
-  sheetObject?.insertRowIterables(newHeader, 0);
+  sheetObject?.insertRowIterables(finalHeader, 0);
   sheetObject?.updateSelectedRowStyle(0, CellStyle(bold: true));
 
   // Write the products.
@@ -58,7 +49,6 @@ Future<void> exportReceiptProductsIntoExcel(
           CellStyle(backgroundColorHex: "#00FF00"));
     }
   }
-
   // Save to the Excel (xlsx) file:
   await _saveToExcelFile(excel, 'receipt_products_${formattedDateTime()}');
 }
@@ -70,8 +60,8 @@ Future<void> exportEANProductsIntoExcel(
   var sheetObject = excel.sheets[excel.getDefaultSheet()];
 
   // Write the header.
-  var newHeader = [..._header, 'More details'];
-  sheetObject?.insertRowIterables(newHeader, 0);
+  var finalHeader = [...header, 'More details'];
+  sheetObject?.insertRowIterables(finalHeader, 0);
   sheetObject?.updateSelectedRowStyle(0, CellStyle(bold: true));
 
   // Write the products.
@@ -87,7 +77,10 @@ Future<void> exportEANProductsIntoExcel(
     sheetObject?.insertRowIterables(
         productDataList, eanProducts.indexOf(product) + 1);
 
-    // If the product is a fruit or vegetable, change the background color to green.
+    /*
+      If the product is a fruit or vegetable,
+      change the background color to green.
+    */
     if (product.isFruitOrVegetable) {
       sheetObject?.updateSelectedRowStyle(eanProducts.indexOf(product) + 1,
           CellStyle(backgroundColorHex: "#00FF00"));
@@ -102,7 +95,10 @@ Future<void> exportEANProductsIntoExcel(
           CellStyle(backgroundColorHex: "#00FF00", fontColorHex: "#FF0000"));
     }
 
-    // If the product is a home delivery, change the background color to green.
+    /*
+      If the product is a home delivery,
+      change the background color to green.
+    */
     if (product.isHomeDelivery) {
       sheetObject?.updateSelectedRowStyle(eanProducts.indexOf(product) + 1,
           CellStyle(backgroundColorHex: "#00FF00"));
@@ -118,6 +114,6 @@ Future<void> exportEANProductsIntoExcel(
 Future<void> _saveToExcelFile(Excel excel, fileName) async {
   var fileBytes = excel.save();
   var file = File(
-      join(replaceTildeWithHomeDirectory(_exportFilePath), '$fileName.xlsx'));
+      join(replaceTildeWithHomeDirectory(exportFilePath), '$fileName.xlsx'));
   await file.writeAsBytes(fileBytes!);
 }
