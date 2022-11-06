@@ -12,6 +12,14 @@ import 'package:path/path.dart';
 /// Export file path.
 const String _exportFilePath = '~/Downloads'; // TODO: Add this to settings
 
+const List<String> _header = [
+  'Name',
+  'Amount',
+  'Price per unit',
+  'Total price',
+  'EAN code'
+];
+
 /// Export receipt products into Excel (xlsx) file.
 Future<void> exportReceiptProductsIntoExcel(
     List<ReceiptProduct> receiptProducts) async {
@@ -19,21 +27,14 @@ Future<void> exportReceiptProductsIntoExcel(
   var sheetObject = excel.sheets[excel.getDefaultSheet()];
 
   // Write the header.
-  var headerDataList = [
-    "Name",
-    "Amount",
-    "Price per unit",
-    "Total price",
-    "EAN code"
-  ];
   var discountCounted = false;
-
+  var newHeader = [..._header];
   // If there's any product with discount, add discount column to Excel file.
   if (receiptProducts.any((product) => product.discountCounted)) {
     discountCounted = true;
-    headerDataList.add("Discount counted");
+    newHeader.add("Discount counted");
   }
-  sheetObject?.insertRowIterables(headerDataList, 0);
+  sheetObject?.insertRowIterables(newHeader, 0);
   sheetObject?.updateSelectedRowStyle(0, CellStyle(bold: true));
 
   // Write the products.
@@ -69,15 +70,8 @@ Future<void> exportEANProductsIntoExcel(
   var sheetObject = excel.sheets[excel.getDefaultSheet()];
 
   // Write the header.
-  var headerDataList = [
-    "Name",
-    "Amount",
-    "Price per unit",
-    "Total price",
-    "EAN code",
-    "More details"
-  ];
-  sheetObject?.insertRowIterables(headerDataList, 0);
+  var newHeader = [..._header, 'More details'];
+  sheetObject?.insertRowIterables(newHeader, 0);
   sheetObject?.updateSelectedRowStyle(0, CellStyle(bold: true));
 
   // Write the products.
