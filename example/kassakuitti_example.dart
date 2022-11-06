@@ -5,7 +5,7 @@ import 'package:kassakuitti/src/utils/selected_shop_helper.dart';
 void main() async {
   var selectedShop = SelectedShop.sKaupat; // TODO: Change to your shop
   var selectedFileFormat =
-      SelectedFileFormat.csv; // TODO: Change to your file format
+      SelectedFileFormat.excel; // TODO: Change to your file format
   String htmlFilePath;
 
   if (selectedShop == SelectedShop.sKaupat) {

@@ -14,6 +14,13 @@ class EANProduct {
       this.eanCode = '',
       this.moreDetails = ''});
 
+  bool get isFruitOrVegetable =>
+      eanCode.startsWith("2") || eanCode.startsWith("02");
+
+  bool get isPackagingMaterial => name == 'Pakkausmateriaalikustannukset';
+
+  bool get isHomeDelivery => name == 'Kotiinkuljetus';
+
   @override
   String toString() {
     return '$quantity x'

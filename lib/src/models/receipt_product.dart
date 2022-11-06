@@ -15,6 +15,9 @@ class ReceiptProduct {
     this.discountCounted = false,
   });
 
+  bool get isFruitOrVegetable =>
+      eanCode.startsWith("2") || eanCode.startsWith("02");
+
   @override
   String toString() {
     return '$quantity x'

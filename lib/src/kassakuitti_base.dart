@@ -52,21 +52,21 @@ class Kassakuitti {
       }
       if (selectedFileFormat == SelectedFileFormat.csv) {
         // Export into CSV file
-        exportReceiptProductsIntoCsv(receiptProducts);
-        exportEANProductsIntoCsv(eanProducts, selectedShop);
+        await exportReceiptProductsIntoCsv(receiptProducts);
+        await exportEANProductsIntoCsv(eanProducts, selectedShop);
       } else {
         // Export into Excel file
-        exportReceiptProductsIntoExcel(receiptProducts);
-        exportEANProductsIntoExcel(eanProducts);
+        await exportReceiptProductsIntoExcel(receiptProducts);
+        await exportEANProductsIntoExcel(eanProducts, selectedShop);
       }
     } else {
       // Selected shop is K-ruoka
       if (selectedFileFormat == SelectedFileFormat.csv) {
         // Export into CSV file
-        exportEANProductsIntoCsv(eanProducts, selectedShop);
+        await exportEANProductsIntoCsv(eanProducts, selectedShop);
       } else {
         // Export into Excel file
-        exportEANProductsIntoExcel(eanProducts);
+        await exportEANProductsIntoExcel(eanProducts, selectedShop);
       }
     }
   }
