@@ -16,7 +16,7 @@ class ReceiptProduct {
   });
 
   bool get isFruitOrVegetable =>
-      eanCode.startsWith("2") || eanCode.startsWith("02");
+      eanCode.startsWith('2') || eanCode.startsWith('02');
 
   @override
   String toString() {

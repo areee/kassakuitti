@@ -15,7 +15,7 @@ class EANProduct {
       this.moreDetails = ''});
 
   bool get isFruitOrVegetable =>
-      eanCode.startsWith("2") || eanCode.startsWith("02");
+      eanCode.startsWith('2') || eanCode.startsWith('02');
 
   bool get isPackagingMaterial => name == 'Pakkausmateriaalikustannukset';
 

@@ -12,13 +12,15 @@ import 'package:path/path.dart';
 Future<void> exportReceiptProductsIntoCsv(
     List<ReceiptProduct> receiptProducts) async {
   var csv = StringBuffer();
+
+  // Write the header.
   var discountCounted = false;
   var finalHeader = [...header];
 
   // If there's any product with discount, add discount column to CSV file:
   if (receiptProducts.any((product) => product.discountCounted)) {
     discountCounted = true;
-    finalHeader.add("Discount counted");
+    finalHeader.add('Discount counted');
   }
   // Write the header:
   csv.write('${finalHeader.join(';')}\n');

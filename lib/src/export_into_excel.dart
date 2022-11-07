@@ -23,7 +23,7 @@ Future<void> exportReceiptProductsIntoExcel(
   // If there's any product with discount, add discount column to Excel file.
   if (receiptProducts.any((product) => product.discountCounted)) {
     discountCounted = true;
-    finalHeader.add("Discount counted");
+    finalHeader.add('Discount counted');
   }
   sheetObject?.insertRowIterables(finalHeader, 0);
   sheetObject?.updateSelectedRowStyle(0, CellStyle(bold: true));
@@ -46,7 +46,7 @@ Future<void> exportReceiptProductsIntoExcel(
     // If the product is a fruit or vegetable, change the background color to green.
     if (product.isFruitOrVegetable) {
       sheetObject?.updateSelectedRowStyle(receiptProducts.indexOf(product) + 1,
-          CellStyle(backgroundColorHex: "#00FF00"));
+          CellStyle(backgroundColorHex: '#00FF00'));
     }
   }
   // Save to the Excel (xlsx) file:
@@ -83,7 +83,7 @@ Future<void> exportEANProductsIntoExcel(
     */
     if (product.isFruitOrVegetable) {
       sheetObject?.updateSelectedRowStyle(eanProducts.indexOf(product) + 1,
-          CellStyle(backgroundColorHex: "#00FF00"));
+          CellStyle(backgroundColorHex: '#00FF00'));
     }
 
     /*
@@ -92,7 +92,7 @@ Future<void> exportEANProductsIntoExcel(
     */
     if (product.isPackagingMaterial) {
       sheetObject?.updateSelectedRowStyle(eanProducts.indexOf(product) + 1,
-          CellStyle(backgroundColorHex: "#00FF00", fontColorHex: "#FF0000"));
+          CellStyle(backgroundColorHex: '#00FF00', fontColorHex: '#FF0000'));
     }
 
     /*
@@ -101,7 +101,7 @@ Future<void> exportEANProductsIntoExcel(
     */
     if (product.isHomeDelivery) {
       sheetObject?.updateSelectedRowStyle(eanProducts.indexOf(product) + 1,
-          CellStyle(backgroundColorHex: "#00FF00"));
+          CellStyle(backgroundColorHex: '#00FF00'));
     }
   }
 
