@@ -16,6 +16,7 @@ void main() {
     setUp(() {
       // Additional setup goes here.
     });
+
     test('Constructor works', () {
       expect(kassakuitti.textFilePath, 'test.txt');
       expect(kassakuitti.htmlFilePath, 'test.html');
@@ -44,44 +45,115 @@ void main() {
         selectedShop: SelectedShop.sKaupat,
         selectedFileFormat: SelectedFileFormat.csv);
 
+    final receiptProducts = kassakuitti.readReceiptProducts();
+    final eanProducts = kassakuitti.readEANProducts();
+
     setUp(() {
       // Additional setup goes here.
     });
-    test('Read receipt products works', () async {
-      final receiptProducts = await kassakuitti.readReceiptProducts();
+
+    test('Receipt products are not null', () {
       expect(receiptProducts, isNotNull);
-      expect(receiptProducts, isA<List<ReceiptProduct>>());
+    });
+
+    test('Receipt products type is ok', () {
+      receiptProducts.then(
+        (x) {
+          expect(x, isA<List<ReceiptProduct>>());
+        },
+      );
+    });
+
+    test('Receipt products\' amount is non-zero', () {
+      receiptProducts.then(
+        (x) {
+          expect(x.length, isNonZero);
+        },
+      );
     });
 
     test('Null text file path throws an argument error', () {
       final kassakuitti = Kassakuitti(null, 'example/s-kaupat_example.html');
-      expect(() => kassakuitti.readReceiptProducts(), throwsArgumentError);
+      expect(kassakuitti.readReceiptProducts(), throwsArgumentError);
     });
 
-    test('Read EAN products works', () async {
-      final eanProducts = await kassakuitti.readEANProducts();
+    test('EAN products are not null', () {
       expect(eanProducts, isNotNull);
-      expect(eanProducts, isA<List<EANProduct>>());
     });
 
-    test('Export works with CSV', () async {
+    test('EAN products type is ok', () {
+      eanProducts.then(
+        (x) {
+          expect(x, isA<List<EANProduct>>());
+        },
+      );
+    });
+
+    test('EAN products\' amount is non-zero', () {
+      eanProducts.then(
+        (x) {
+          expect(x.length, isNonZero);
+        },
+      );
+    });
+
+    test('Exported receiptProducts is not null', () async {
       final receiptProducts = await kassakuitti.readReceiptProducts();
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts);
-      expect(filePaths.item1, isNotNull);
+      expect(filePaths.item1!, isNotNull);
+      // sleep(Duration(seconds: 2));
+      await File(filePaths.item1!).delete();
+      await File(filePaths.item2).delete();
+    });
+
+    test('Exported eanProducts is not null', () async {
+      final receiptProducts = await kassakuitti.readReceiptProducts();
+      final eanProducts = await kassakuitti.readEANProducts();
+      final filePaths = await kassakuitti.export(receiptProducts, eanProducts);
       expect(filePaths.item2, isNotNull);
-      if (filePaths.item1 != null) {
-        expect(await File(filePaths.item1!).exists(), true);
-      }
+      // sleep(Duration(seconds: 2));
+      await File(filePaths.item1!).delete();
+      await File(filePaths.item2).delete();
+    });
+
+    test('Exported receiptProducts file exists', () async {
+      final receiptProducts = await kassakuitti.readReceiptProducts();
+      final eanProducts = await kassakuitti.readEANProducts();
+      final filePaths = await kassakuitti.export(receiptProducts, eanProducts);
+      expect(await File(filePaths.item1!).exists(), true);
+      // sleep(Duration(seconds: 2));
+      await File(filePaths.item1!).delete();
+      await File(filePaths.item2).delete();
+    });
+
+    test('Exported eanProducts file exists', () async {
+      final receiptProducts = await kassakuitti.readReceiptProducts();
+      final eanProducts = await kassakuitti.readEANProducts();
+      final filePaths = await kassakuitti.export(receiptProducts, eanProducts);
       expect(await File(filePaths.item2).exists(), true);
-      if (filePaths.item1 != null) {
-        expect(filePaths.item1!.endsWith('.csv'), true);
-      }
+      // sleep(Duration(seconds: 2));
+      await File(filePaths.item1!).delete();
+      await File(filePaths.item2).delete();
+    });
+
+    test('Exported receiptProducts file type is CSV', () async {
+      final receiptProducts = await kassakuitti.readReceiptProducts();
+      final eanProducts = await kassakuitti.readEANProducts();
+      final filePaths = await kassakuitti.export(receiptProducts, eanProducts);
+      expect(filePaths.item1!.endsWith('.csv'), true);
+      // sleep(Duration(seconds: 2));
+      await File(filePaths.item1!).delete();
+      await File(filePaths.item2).delete();
+    });
+
+    test('Exported eanProducts file type is CSV', () async {
+      final receiptProducts = await kassakuitti.readReceiptProducts();
+      final eanProducts = await kassakuitti.readEANProducts();
+      final filePaths = await kassakuitti.export(receiptProducts, eanProducts);
       expect(filePaths.item2.endsWith('.csv'), true);
-      sleep(Duration(seconds: 2));
-      if (filePaths.item1 != null) {
-        await File(filePaths.item1!).delete();
-      }
+      // sleep(Duration(seconds: 2));
+      await File(filePaths.item1!).delete();
       await File(filePaths.item2).delete();
     });
   });
