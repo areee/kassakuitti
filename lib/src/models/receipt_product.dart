@@ -1,9 +1,21 @@
-class ReceiptProduct {
+import 'package:kassakuitti/src/models/product.dart';
+
+class ReceiptProduct implements Product {
+  @override
   String name;
+
+  @override
   double totalPrice;
+
+  @override
   int quantity;
+
+  @override
   double? pricePerUnit;
+
+  @override
   String eanCode;
+
   bool discountCounted;
 
   ReceiptProduct({

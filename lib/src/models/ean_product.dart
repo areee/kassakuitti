@@ -1,18 +1,31 @@
-class EANProduct {
-  final String name;
-  final double totalPrice;
-  final int quantity;
-  final double? pricePerUnit;
-  final String eanCode;
-  final String moreDetails;
+import 'package:kassakuitti/src/models/product.dart';
 
-  EANProduct(
-      {this.name = 'Default EAN product name',
-      this.totalPrice = 0.00,
-      this.quantity = 1,
-      this.pricePerUnit,
-      this.eanCode = '',
-      this.moreDetails = ''});
+class EANProduct implements Product {
+  @override
+  String name;
+
+  @override
+  double totalPrice;
+
+  @override
+  int quantity;
+
+  @override
+  double? pricePerUnit;
+
+  @override
+  String eanCode;
+
+  String moreDetails;
+
+  EANProduct({
+    this.name = 'Default EAN product name',
+    this.totalPrice = 0.00,
+    this.quantity = 1,
+    this.pricePerUnit,
+    this.eanCode = '',
+    this.moreDetails = '',
+  });
 
   bool get isFruitOrVegetable =>
       eanCode.startsWith('2') || eanCode.startsWith('02');
