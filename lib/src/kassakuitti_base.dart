@@ -7,6 +7,7 @@ import 'package:kassakuitti/src/models/receipt_product.dart';
 import 'package:kassakuitti/src/strings_to_receipt_products.dart';
 import 'package:kassakuitti/src/utils/selected_file_format_helper.dart';
 import 'package:kassakuitti/src/utils/selected_shop_helper.dart';
+import 'package:tuple/tuple.dart';
 
 /// Creates a new [Kassakuitti] instance.
 class Kassakuitti {
@@ -43,7 +44,8 @@ class Kassakuitti {
   }
 
   /// Export recept products and EAN products into CSV or Excel file.
-  Future<void> export(List<ReceiptProduct>? receiptProducts,
+  /// Returns the path(s) of the exported file(s).
+  Future<Tuple2<String?, String>> export(List<ReceiptProduct>? receiptProducts,
       List<EANProduct> eanProducts) async {
     if (selectedShop == SelectedShop.sKaupat) {
       // Selected shop is S-kaupat
@@ -52,21 +54,23 @@ class Kassakuitti {
       }
       if (selectedFileFormat == SelectedFileFormat.csv) {
         // Export into CSV file
-        await exportReceiptProductsIntoCsv(receiptProducts);
-        await exportEANProductsIntoCsv(eanProducts, selectedShop);
+        return Tuple2(await exportReceiptProductsIntoCsv(receiptProducts),
+            await exportEANProductsIntoCsv(eanProducts, selectedShop));
       } else {
         // Export into Excel file
-        await exportReceiptProductsIntoExcel(receiptProducts);
-        await exportEANProductsIntoExcel(eanProducts, selectedShop);
+        return Tuple2(await exportReceiptProductsIntoExcel(receiptProducts),
+            await exportEANProductsIntoExcel(eanProducts, selectedShop));
       }
     } else {
       // Selected shop is K-ruoka
       if (selectedFileFormat == SelectedFileFormat.csv) {
         // Export into CSV file
-        await exportEANProductsIntoCsv(eanProducts, selectedShop);
+        return Tuple2(
+            null, await exportEANProductsIntoCsv(eanProducts, selectedShop));
       } else {
         // Export into Excel file
-        await exportEANProductsIntoExcel(eanProducts, selectedShop);
+        return Tuple2(
+            null, await exportEANProductsIntoExcel(eanProducts, selectedShop));
       }
     }
   }

@@ -11,7 +11,7 @@ import 'package:kassakuitti/src/utils/selected_shop_helper.dart';
 import 'package:path/path.dart';
 
 /// Export receipt products into Excel (xlsx) file.
-Future<void> exportReceiptProductsIntoExcel(
+Future<String> exportReceiptProductsIntoExcel(
     List<ReceiptProduct> receiptProducts) async {
   var excel = Excel.createExcel();
   var sheetObject = excel.sheets[excel.getDefaultSheet()];
@@ -50,11 +50,12 @@ Future<void> exportReceiptProductsIntoExcel(
     }
   }
   // Save to the Excel (xlsx) file:
-  await _saveToExcelFile(excel, 'receipt_products_${formattedDateTime()}');
+  return await _saveToExcelFile(
+      excel, 'receipt_products_${formattedDateTime()}');
 }
 
 /// Export EAN products into Excel (xlsx) file.
-Future<void> exportEANProductsIntoExcel(
+Future<String> exportEANProductsIntoExcel(
     List<EANProduct> eanProducts, SelectedShop selectedShop) async {
   var excel = Excel.createExcel();
   var sheetObject = excel.sheets[excel.getDefaultSheet()];
@@ -106,14 +107,16 @@ Future<void> exportEANProductsIntoExcel(
   }
 
   // Save to the Excel (xlsx) file:
-  await _saveToExcelFile(
+  return await _saveToExcelFile(
       excel, '${selectedShop.name}_ean_products_${formattedDateTime()}');
 }
 
 /// Save to the Excel (xlsx) file.
-Future<void> _saveToExcelFile(Excel excel, fileName) async {
+Future<String> _saveToExcelFile(Excel excel, fileName) async {
   var fileBytes = excel.save();
-  var file = File(
-      join(replaceTildeWithHomeDirectory(exportFilePath), '$fileName.xlsx'));
+  var filePath =
+      join(replaceTildeWithHomeDirectory(exportFilePath), '$fileName.xlsx');
+  var file = File(filePath);
   await file.writeAsBytes(fileBytes!);
+  return filePath;
 }

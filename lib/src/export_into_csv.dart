@@ -9,7 +9,7 @@ import 'package:kassakuitti/src/utils/selected_shop_helper.dart';
 import 'package:path/path.dart';
 
 /// Export receipt products into CSV file.
-Future<void> exportReceiptProductsIntoCsv(
+Future<String> exportReceiptProductsIntoCsv(
     List<ReceiptProduct> receiptProducts) async {
   var csv = StringBuffer();
 
@@ -40,12 +40,12 @@ Future<void> exportReceiptProductsIntoCsv(
     csv.write('${productDataList.join(';')}\n');
   }
   // Save to the CSV file:
-  await _saveToCsvFile(
+  return await _saveToCsvFile(
       csv.toString(), 'receipt_products_${formattedDateTime()}');
 }
 
 /// Export EAN products into CSV file.
-Future<void> exportEANProductsIntoCsv(
+Future<String> exportEANProductsIntoCsv(
     List<EANProduct> eanProducts, SelectedShop selectedShop) async {
   var csv = StringBuffer();
 
@@ -67,13 +67,15 @@ Future<void> exportEANProductsIntoCsv(
   }
 
   // Save to the CSV file:
-  await _saveToCsvFile(csv.toString(),
+  return await _saveToCsvFile(csv.toString(),
       '${selectedShop.name}_ean_products_${formattedDateTime()}');
 }
 
 /// Save to the CSV file.
-Future<void> _saveToCsvFile(String csv, String fileName) async {
-  var file = File(
-      join(replaceTildeWithHomeDirectory(exportFilePath), '$fileName.csv'));
+Future<String> _saveToCsvFile(String csv, String fileName) async {
+  var filePath =
+      join(replaceTildeWithHomeDirectory(exportFilePath), '$fileName.csv');
+  var file = File(filePath);
   await file.writeAsString(csv.toString());
+  return filePath;
 }
