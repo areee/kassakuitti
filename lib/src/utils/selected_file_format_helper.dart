@@ -1,6 +1,6 @@
 /// Selected file format: excel or csv
 enum SelectedFileFormat {
-  excel('Excel'),
+  xlsx('XLSX'), // Excel
   csv('CSV');
 
   final String term;

@@ -16,9 +16,14 @@ class Kassakuitti {
   SelectedShop selectedShop;
   SelectedFileFormat selectedFileFormat;
 
+  /// Creates a new [Kassakuitti] instance.
+  /// Default values are:
+  /// * [textFilePath] = null
+  /// * [selectedShop] = [SelectedShop.sKaupat]
+  /// * [selectedFileFormat] = [SelectedFileFormat.xlsx] (Excel)
   Kassakuitti(this.textFilePath, this.htmlFilePath,
       {this.selectedShop = SelectedShop.sKaupat,
-      this.selectedFileFormat = SelectedFileFormat.excel});
+      this.selectedFileFormat = SelectedFileFormat.xlsx});
 
   @override
   String toString() {
