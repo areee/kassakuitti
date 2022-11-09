@@ -1,3 +1,7 @@
 ## 0.1.0
 
-- Initial version.
+- Add a minimum viable product (MVP). It includes:
+    - a Kassakuitti instance
+    - read a text file containing receipt products (only for S-kaupat)
+    - read an HTML file containing EAN products (for both S-kaupat and K-ruoka) and
+    - export both product types into CSV or Excel (XLSX) file based on the choice.

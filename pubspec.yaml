@@ -1,5 +1,5 @@
 name: kassakuitti
-description: A Dart package for handling "dart_kassakuitti_cli" & "rvka" Flutter GUI 
+description: A Dart package for handling a cash receipt coming from S-kaupat or K-ruoka (two Finnish food online stores).
 version: 0.1.0
 homepage: https://github.com/areee/kassakuitti
 

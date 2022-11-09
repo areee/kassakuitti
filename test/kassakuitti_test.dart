@@ -1,10 +1,6 @@
 import 'dart:io';
 
 import 'package:kassakuitti/kassakuitti.dart';
-import 'package:kassakuitti/src/models/ean_product.dart';
-import 'package:kassakuitti/src/models/receipt_product.dart';
-import 'package:kassakuitti/src/utils/selected_file_format_helper.dart';
-import 'package:kassakuitti/src/utils/selected_shop_helper.dart';
 import 'package:mime/mime.dart';
 import 'package:test/test.dart';
 

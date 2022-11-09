@@ -1,6 +1,4 @@
 import 'package:kassakuitti/kassakuitti.dart';
-import 'package:kassakuitti/src/utils/selected_file_format_helper.dart';
-import 'package:kassakuitti/src/utils/selected_shop_helper.dart';
 
 void main() async {
   var selectedShop = SelectedShop.sKaupat; // TODO: Change to your shop
@@ -34,7 +32,10 @@ void main() async {
       print(element);
     }
 
-    kassakuitti.export(receiptProducts, eanProducts);
+    var exportedFilePaths =
+        await kassakuitti.export(receiptProducts, eanProducts);
+
+    print('Exported file paths: $exportedFilePaths');
   } else {
     print('Selected shop is ${SelectedShop.kRuoka.value}');
 
@@ -51,6 +52,7 @@ void main() async {
       print(element);
     }
 
-    kassakuitti.export(null, eanProducts);
+    var exportedFilePaths = await kassakuitti.export(null, eanProducts);
+    print('Exported file paths: $exportedFilePaths');
   }
 }
