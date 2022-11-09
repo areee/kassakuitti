@@ -16,7 +16,7 @@ class EANProduct implements Product {
   @override
   String eanCode;
 
-  String moreDetails;
+  String? moreDetails;
 
   EANProduct({
     this.name = 'Default EAN product name',
@@ -24,7 +24,7 @@ class EANProduct implements Product {
     this.quantity = 1,
     this.pricePerUnit,
     this.eanCode = '',
-    this.moreDetails = '',
+    this.moreDetails,
   });
 
   bool get isFruitOrVegetable =>
@@ -41,6 +41,6 @@ class EANProduct implements Product {
         '${quantity != 1 ? ' ($pricePerUnit e / pcs)' : ''}'
         ' = $totalPrice e.'
         '${eanCode.isNotEmpty ? ' EAN: $eanCode.' : ''}'
-        '${moreDetails.isNotEmpty ? ' More details: $moreDetails' : ''}';
+        '${moreDetails != null ? ' More details: $moreDetails' : ''}';
   }
 }
