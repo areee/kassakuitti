@@ -5,6 +5,7 @@ import 'package:kassakuitti/src/models/ean_product.dart';
 import 'package:kassakuitti/src/models/receipt_product.dart';
 import 'package:kassakuitti/src/utils/selected_file_format_helper.dart';
 import 'package:kassakuitti/src/utils/selected_shop_helper.dart';
+import 'package:mime/mime.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -56,10 +57,22 @@ void main() {
       expect(receiptProducts, isNotNull);
     });
 
+    test('EAN products are not null', () {
+      expect(eanProducts, isNotNull);
+    });
+
     test('Receipt products type is ok', () {
       receiptProducts.then(
         (x) {
           expect(x, isA<List<ReceiptProduct>>());
+        },
+      );
+    });
+
+    test('EAN products type is ok', () {
+      eanProducts.then(
+        (x) {
+          expect(x, isA<List<EANProduct>>());
         },
       );
     });
@@ -72,29 +85,17 @@ void main() {
       );
     });
 
-    test('Null text file path throws an argument error', () {
-      final kassakuitti = Kassakuitti(null, 'example/s-kaupat_example.html');
-      expect(kassakuitti.readReceiptProducts(), throwsArgumentError);
-    });
-
-    test('EAN products are not null', () {
-      expect(eanProducts, isNotNull);
-    });
-
-    test('EAN products type is ok', () {
-      eanProducts.then(
-        (x) {
-          expect(x, isA<List<EANProduct>>());
-        },
-      );
-    });
-
     test('EAN products\' amount is non-zero', () {
       eanProducts.then(
         (x) {
           expect(x.length, isNonZero);
         },
       );
+    });
+
+    test('Null text file path throws an argument error', () {
+      final kassakuitti = Kassakuitti(null, 'example/s-kaupat_example.html');
+      expect(kassakuitti.readReceiptProducts(), throwsArgumentError);
     });
 
     test('Exported receiptProducts is not null', () async {
@@ -137,7 +138,7 @@ void main() {
       await File(filePaths.item2).delete();
     });
 
-    test('Exported receiptProducts file type is CSV', () async {
+    test('Exported receiptProducts file extension is CSV', () async {
       final receiptProducts = await kassakuitti.readReceiptProducts();
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts);
@@ -147,13 +148,101 @@ void main() {
       await File(filePaths.item2).delete();
     });
 
-    test('Exported eanProducts file type is CSV', () async {
+    test('Exported receiptProducts mime type is CSV', () async {
+      final receiptProducts = await kassakuitti.readReceiptProducts();
+      final eanProducts = await kassakuitti.readEANProducts();
+      final filePaths = await kassakuitti.export(receiptProducts, eanProducts);
+      expect(lookupMimeType(filePaths.item1!), 'text/csv');
+      // sleep(Duration(seconds: 2));
+      await File(filePaths.item1!).delete();
+      await File(filePaths.item2).delete();
+    });
+
+    test('Exported eanProducts file extension is CSV', () async {
       final receiptProducts = await kassakuitti.readReceiptProducts();
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts);
       expect(filePaths.item2.endsWith('.csv'), true);
       // sleep(Duration(seconds: 2));
       await File(filePaths.item1!).delete();
+      await File(filePaths.item2).delete();
+    });
+
+    test('Exported eanProducts mime type is CSV', () async {
+      final receiptProducts = await kassakuitti.readReceiptProducts();
+      final eanProducts = await kassakuitti.readEANProducts();
+      final filePaths = await kassakuitti.export(receiptProducts, eanProducts);
+      expect(lookupMimeType(filePaths.item2), 'text/csv');
+      // sleep(Duration(seconds: 2));
+      await File(filePaths.item1!).delete();
+      await File(filePaths.item2).delete();
+    });
+  });
+
+  group('When selected shop is K-ruoka', () {
+    final kassakuitti = Kassakuitti(null, 'example/k-ruoka_example.html',
+        selectedShop: SelectedShop.kRuoka,
+        selectedFileFormat: SelectedFileFormat.csv);
+
+    final eanProducts = kassakuitti.readEANProducts();
+
+    setUp(() {
+      // Additional setup goes here.
+    });
+
+    test('EAN products are not null', () {
+      expect(eanProducts, isNotNull);
+    });
+
+    test('EAN products type is ok', () {
+      eanProducts.then(
+        (x) {
+          expect(x, isA<List<EANProduct>>());
+        },
+      );
+    });
+
+    test('EAN products\' amount is non-zero', () {
+      eanProducts.then(
+        (x) {
+          expect(x.length, isNonZero);
+        },
+      );
+    });
+
+    test('Reading receipt products throws an argument error', () {
+      expect(() => kassakuitti.readReceiptProducts(), throwsArgumentError);
+    });
+
+    test('Exported eanProducts is not null', () async {
+      final eanProducts = await kassakuitti.readEANProducts();
+      final filePaths = await kassakuitti.export(null, eanProducts);
+      expect(filePaths.item2, isNotNull);
+      // sleep(Duration(seconds: 2));
+      await File(filePaths.item2).delete();
+    });
+
+    test('Exported eanProducts file exists', () async {
+      final eanProducts = await kassakuitti.readEANProducts();
+      final filePaths = await kassakuitti.export(null, eanProducts);
+      expect(await File(filePaths.item2).exists(), true);
+      // sleep(Duration(seconds: 2));
+      await File(filePaths.item2).delete();
+    });
+
+    test('Exported eanProducts file extension is CSV', () async {
+      final eanProducts = await kassakuitti.readEANProducts();
+      final filePaths = await kassakuitti.export(null, eanProducts);
+      expect(filePaths.item2.endsWith('.csv'), true);
+      // sleep(Duration(seconds: 2));
+      await File(filePaths.item2).delete();
+    });
+
+    test('Exported eanProducts mime type is CSV', () async {
+      final eanProducts = await kassakuitti.readEANProducts();
+      final filePaths = await kassakuitti.export(null, eanProducts);
+      expect(lookupMimeType(filePaths.item2), 'text/csv');
+      // sleep(Duration(seconds: 2));
       await File(filePaths.item2).delete();
     });
   });
@@ -188,29 +277,5 @@ void main() {
   //       expect(receiptProducts[3].pricePerUnit, null);
   //     });
   //   }));
-  // });
-
-  // group('Kassakuitti with S-kaupat', (() {
-  //   final kassakuitti =
-  //       Kassakuitti(null, 'test.html', selectedShop: SelectedShop.sKaupat);
-  //   setUp(() {
-  //     // Additional setup goes here.
-  //   });
-
-  //   test('Null text file path throws an argument error', () {
-  //     expect(() => kassakuitti.readReceiptProducts(), throwsArgumentError);
-  //   });
-  // }));
-
-  // group('Kassakuitti with K-ruoka', () {
-  //   final kassakuitti =
-  //       Kassakuitti(null, 'test.html', selectedShop: SelectedShop.kRuoka);
-  //   setUp(() {
-  //     // Additional setup goes here.
-  //   });
-
-  //   test('Read receipt products throws an argument error', () {
-  //     expect(() => kassakuitti.readReceiptProducts(), throwsArgumentError);
-  //   });
   // });
 }
