@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 6.0.0">
+  <meta name="description" content="kassakuitti API docs, for the Dart programming language.">
+  <title>kassakuitti - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="" data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="https://github.com/areee/kassakuitti">kassakuitti package</a></li>
+  </ol>
+  <div class="self-name">kassakuitti</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="kassakuitti">kassakuitti</h1>
+<p>A Dart package for handling a cash receipt coming from S-kaupat or K-ruoka (two Finnish food online stores).</p>
+<p>Currently this package works best with a command-line interface (CLI). This means that it should work only with Windows, macOS and Linux.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Read a text file containing receipt products (only for S-kaupat).</li>
+<li>Read an HTML file containing EAN products (for both S-kaupat and K-ruoka).</li>
+<li>Export both product types into CSV or Excel (XLSX) file based on the choice.</li>
+</ul>
+<h2 id="getting-started">Getting started</h2>
+<p>You need two files to use this package:</p>
+<ol>
+<li>an HTML file containing EAN products when using S-kaupat or K-ruoka and</li>
+<li>a text file containing receipt products when using S-kaupat.</li>
+</ol>
+<p>To get an HTML file, follow these instructions:</p>
+<ul>
+<li>Generate an HTML file by using <code>snapshot-as-html</code> project (see the <a href="https://github.com/areee/dart_kassakuitti_cli/blob/main/INSTALLATION.md">installation</a>).
+<ul>
+<li>To generate that, go to an active order page of an online store:
+<ul>
+<li><a href="https://www.s-kaupat.fi">s-kaupat.fi</a> (profile image → "Tilaukset" → "Katso tilaustiedot") or</li>
+<li><a href="https://www.k-ruoka.fi">k-ruoka.fi</a> (profile image → "Tilaukset" → expand the latest order).</li>
+</ul>
+</li>
+<li>Then click the <code>snapshot-as-html</code> extension image and click "Capture it!".</li>
+<li>An HTML file will be generated and saved to your computer's Downloads folder.</li>
+</ul>
+</li>
+</ul>
+<p>To get a text file, follow these instructions:</p>
+<ul>
+<li>Ensure that you have enabled an electronic cash receipt service in S-kanava (a separate service for S-kaupat).
+<ul>
+<li>Go to <a href="https://www.s-kanava.fi">s-kanava.fi</a> and select <a href="https://www.s-kanava.fi/web/s/oma-s-kanava/asiakasomistaja/kassakuitit">"Kassakuitit" page</a>.</li>
+<li>Select a cash receipt you want to view. Select needed rows by painting from the first product row to the total row. Copy them.</li>
+<li>Open a text editor (e.g. Notepad or TextEdit) and paste copied cash receipt rows. Save the file as a plain text file (.txt).</li>
+</ul>
+</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<pre class="language-dart"><code class="language-dart">/*
+    Create a Kassakuitti instance using default values:
+        selectedStore = selectedShop = SelectedShop.sKaupat
+        selectedFileFormat = SelectedFileFormat.xlsx
+*/
+var kassakuitti = Kassakuitti('path/to/textFile.txt', 'path/to/htmlFile.html');
+var receiptProducts = await kassakuitti.readReceiptProducts();
+var eanProducts = await kassakuitti.readEANProducts();
+var exportedFilePaths =
+        await kassakuitti.export(receiptProducts, eanProducts);
+</code></pre>
+<h2 id="additional-information">Additional information</h2>
+<p>This kassakuitti project set started from <a href="https://github.com/areee/dart_kassakuitti_cli">dart_kassakuitti_cli</a> project in October 2021.</p>
+<p>If you would like to contribute, please give an <a href="https://github.com/areee/kassakuitti/issues/new">issue</a> to discuss about the problem.</p>
+<p>Currently this project is authored by <a href="https://www.linkedin.com/in/arttuylh">Arttu Ylhävuori</a>.</p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="kassakuitti">
+  <span class="name"><a href="kassakuitti/kassakuitti-library.html">kassakuitti</a></span> 
+
+</dt>
+<dd>Kassakuitti -
+handle a cash receipt coming from S-kaupat or K-ruoka
+(two Finnish food online stores).
+</dd>
+
+        </dl>
+      </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="https://github.com/areee/kassakuitti">kassakuitti package</a></li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">kassakuitti</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="kassakuitti/kassakuitti-library.html">kassakuitti</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    kassakuitti
+      0.1.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
