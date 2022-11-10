@@ -54,8 +54,9 @@ void _handleSubstitutedProducts(
           totalPrice: productPrice,
           quantity: quantity,
           eanCode: productItem.id.replaceAll('department-product-item-', ''),
-          pricePerUnit:
-              quantity == 1 ? null : (productPrice / quantity).toPrecision(2),
+          pricePerUnit: quantity == 1 || quantity == 0
+              ? null
+              : (productPrice / quantity).toPrecision(2),
         ),
       );
     }
@@ -89,8 +90,9 @@ void _handleNormalProducts(
           totalPrice: productPrice,
           quantity: quantity,
           eanCode: productItem.id.replaceAll('department-product-item-', ''),
-          pricePerUnit:
-              quantity == 1 ? null : (productPrice / quantity).toPrecision(2),
+          pricePerUnit: quantity == 1 || quantity == 0
+              ? null
+              : (productPrice / quantity).toPrecision(2),
         ),
       );
     }

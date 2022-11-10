@@ -41,8 +41,9 @@ void _html2EANProductsFromDocument(
       totalPrice: productPrice,
       quantity: quantity,
       eanCode: product.attributes['data-product-id'] ?? '',
-      pricePerUnit:
-          quantity == 1 ? null : (productPrice / quantity).toPrecision(2),
+      pricePerUnit: quantity == 1 || quantity == 0
+          ? null
+          : (productPrice / quantity).toPrecision(2),
     ));
   }
 }
