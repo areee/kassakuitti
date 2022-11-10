@@ -5,6 +5,7 @@ class ReceiptProduct extends Product {
   /// Is discount counted.
   bool isDiscountCounted;
 
+  /// Constructor for [ReceiptProduct].
   ReceiptProduct({
     super.name = 'Default receipt product name',
     super.totalPrice = 0.00,
