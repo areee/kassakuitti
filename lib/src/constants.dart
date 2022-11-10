@@ -4,8 +4,14 @@ const String exportFilePath = '~/Downloads'; // TODO: Add this to settings
 /// Header for products.
 const List<String> header = [
   'Name',
-  'Amount',
+  'Quantity',
   'Price per unit',
   'Total price',
   'EAN code'
 ];
+
+/// More details header for EAN products.
+const String moreDetailsHeader = 'More details';
+
+/// Is discount counted header for receipt products.
+const String isDiscountCountedHeader = 'Is discount counted';

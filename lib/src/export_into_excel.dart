@@ -21,9 +21,9 @@ Future<String> exportReceiptProductsIntoExcel(
   var finalHeader = [...header];
 
   // If there's any product with discount, add discount column to Excel file.
-  if (receiptProducts.any((product) => product.discountCounted)) {
+  if (receiptProducts.any((product) => product.isDiscountCounted)) {
     discountCounted = true;
-    finalHeader.add('Discount counted');
+    finalHeader.add(isDiscountCountedHeader);
   }
   sheetObject?.insertRowIterables(finalHeader, 0);
   sheetObject?.updateSelectedRowStyle(0, CellStyle(bold: true));
@@ -38,7 +38,7 @@ Future<String> exportReceiptProductsIntoExcel(
       product.eanCode,
     ];
     if (discountCounted) {
-      productDataList.add(product.discountCounted);
+      productDataList.add(product.isDiscountCounted);
     }
     sheetObject?.insertRowIterables(
         productDataList, receiptProducts.indexOf(product) + 1);
@@ -61,7 +61,7 @@ Future<String> exportEANProductsIntoExcel(
   var sheetObject = excel.sheets[excel.getDefaultSheet()];
 
   // Write the header.
-  var finalHeader = [...header, 'More details'];
+  var finalHeader = [...header, moreDetailsHeader];
   sheetObject?.insertRowIterables(finalHeader, 0);
   sheetObject?.updateSelectedRowStyle(0, CellStyle(bold: true));
 
@@ -73,7 +73,7 @@ Future<String> exportEANProductsIntoExcel(
       product.pricePerUnit ?? '',
       product.totalPrice,
       product.eanCode,
-      product.moreDetails
+      product.moreDetails ?? '',
     ];
     sheetObject?.insertRowIterables(
         productDataList, eanProducts.indexOf(product) + 1);

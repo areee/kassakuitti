@@ -18,9 +18,9 @@ Future<String> exportReceiptProductsIntoCsv(
   var finalHeader = [...header];
 
   // If there's any product with discount, add discount column to CSV file:
-  if (receiptProducts.any((product) => product.discountCounted)) {
+  if (receiptProducts.any((product) => product.isDiscountCounted)) {
     discountCounted = true;
-    finalHeader.add('Discount counted');
+    finalHeader.add(isDiscountCountedHeader);
   }
   // Write the header:
   csv.write('${finalHeader.join(';')}\n');
@@ -35,7 +35,7 @@ Future<String> exportReceiptProductsIntoCsv(
       product.eanCode,
     ];
     if (discountCounted) {
-      productDataList.add(product.discountCounted);
+      productDataList.add(product.isDiscountCounted);
     }
     csv.write('${productDataList.join(';')}\n');
   }
@@ -50,7 +50,7 @@ Future<String> exportEANProductsIntoCsv(
   var csv = StringBuffer();
 
   // Write the header:
-  var finalHeader = [...header, 'More details'];
+  var finalHeader = [...header, moreDetailsHeader];
   csv.write('${finalHeader.join(';')}\n');
 
   // Write the products:
@@ -61,7 +61,7 @@ Future<String> exportEANProductsIntoCsv(
       product.pricePerUnit ?? '',
       product.totalPrice,
       product.eanCode,
-      product.moreDetails,
+      product.moreDetails ?? '',
     ];
     csv.write('${productDataList.join(';')}\n');
   }

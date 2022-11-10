@@ -83,7 +83,7 @@ void _handleDiscountOrCampaignRow(
         (discountedPrice / lastProduct.quantity).toPrecision(2);
   }
   lastProduct.totalPrice = discountedPrice;
-  lastProduct.discountCounted = true;
+  lastProduct.isDiscountCounted = true;
 }
 
 /// Handle a quantity and price per unit row.

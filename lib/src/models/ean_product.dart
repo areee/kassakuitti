@@ -1,39 +1,27 @@
 import 'package:kassakuitti/src/models/product.dart';
 
-class EANProduct implements Product {
-  @override
-  String name;
-
-  @override
-  double totalPrice;
-
-  @override
-  int quantity;
-
-  @override
-  double? pricePerUnit;
-
-  @override
-  String eanCode;
-
+/// Creates a new [EANProduct] instance.
+class EANProduct extends Product {
+  /// More details.
   String? moreDetails;
 
+  /// Constructor for [EANProduct].
   EANProduct({
-    this.name = 'Default EAN product name',
-    this.totalPrice = 0.00,
-    this.quantity = 1,
-    this.pricePerUnit,
-    this.eanCode = '',
+    super.name = 'Default EAN product name',
+    super.totalPrice = 0.00,
+    super.quantity = 1,
+    super.pricePerUnit,
+    super.eanCode = '',
     this.moreDetails,
   });
 
-  bool get isFruitOrVegetable =>
-      eanCode.startsWith('2') || eanCode.startsWith('02');
-
+  /// Is product packaging material.
   bool get isPackagingMaterial => name == 'Pakkausmateriaalikustannukset';
 
+  /// Is product home delivery.
   bool get isHomeDelivery => name == 'Kotiinkuljetus';
 
+  /// Override [toString] method.
   @override
   String toString() {
     return '$quantity x'

@@ -7,7 +7,7 @@ void main() async {
   String htmlFilePath;
 
   if (selectedShop == SelectedShop.sKaupat) {
-    print('Selected shop is ${SelectedShop.sKaupat.value}');
+    print('Selected shop is ${SelectedShop.sKaupat.shopName}');
 
     var textFilePath = 'example/cash_receipt_example.txt';
     htmlFilePath = 'example/s-kaupat_example.html';
@@ -37,7 +37,7 @@ void main() async {
 
     print('Exported file paths: $exportedFilePaths');
   } else {
-    print('Selected shop is ${SelectedShop.kRuoka.value}');
+    print('Selected shop is ${SelectedShop.kRuoka.shopName}');
 
     htmlFilePath = 'example/k-ruoka_example.html';
     var kassakuitti = Kassakuitti(null, htmlFilePath,

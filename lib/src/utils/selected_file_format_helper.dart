@@ -1,10 +1,17 @@
-/// Selected file format: excel or csv
+/// Selected file format: xlsx (XLSX), csv (CSV)
 enum SelectedFileFormat {
-  xlsx('XLSX'), // Excel
+  /// XLSX = Excel
+  xlsx('XLSX'),
+
+  /// CSV
   csv('CSV');
 
-  final String term;
-  const SelectedFileFormat(this.term);
+  /// A file format name.
+  final String _fileFormatName;
 
-  String get value => term;
+  /// Constructor for [SelectedFileFormat] that sets a file format name.
+  const SelectedFileFormat(this._fileFormatName);
+
+  /// Returns a file format name.
+  String get fileFormatName => _fileFormatName;
 }

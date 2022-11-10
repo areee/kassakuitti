@@ -1,35 +1,20 @@
 import 'package:kassakuitti/src/models/product.dart';
 
-class ReceiptProduct implements Product {
-  @override
-  String name;
-
-  @override
-  double totalPrice;
-
-  @override
-  int quantity;
-
-  @override
-  double? pricePerUnit;
-
-  @override
-  String eanCode;
-
-  bool discountCounted;
+/// Creates a new [ReceiptProduct] instance.
+class ReceiptProduct extends Product {
+  /// Is discount counted.
+  bool isDiscountCounted;
 
   ReceiptProduct({
-    this.name = 'Default receipt product name',
-    this.totalPrice = 0.00,
-    this.quantity = 1,
-    this.pricePerUnit,
-    this.eanCode = '',
-    this.discountCounted = false,
+    super.name = 'Default receipt product name',
+    super.totalPrice = 0.00,
+    super.quantity = 1,
+    super.pricePerUnit,
+    super.eanCode = '',
+    this.isDiscountCounted = false,
   });
 
-  bool get isFruitOrVegetable =>
-      eanCode.startsWith('2') || eanCode.startsWith('02');
-
+  /// Override [toString] method.
   @override
   String toString() {
     return '$quantity x'
@@ -37,6 +22,6 @@ class ReceiptProduct implements Product {
         '${quantity != 1 ? ' ($pricePerUnit e / pcs)' : ''}'
         ' = $totalPrice e.'
         '${eanCode.isNotEmpty ? ' EAN: $eanCode.' : ''}'
-        '${discountCounted == true ? ' Discount counted: $discountCounted' : ''}';
+        '${isDiscountCounted == true ? ' Is discount counted: $isDiscountCounted' : ''}';
   }
 }

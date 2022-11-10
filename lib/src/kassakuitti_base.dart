@@ -32,10 +32,11 @@ class Kassakuitti {
       {this.selectedShop = SelectedShop.sKaupat,
       this.selectedFileFormat = SelectedFileFormat.xlsx});
 
+  /// Override [toString] method.
   @override
   String toString() {
     return 'Kassakuitti(textFilePath: $textFilePath, htmlFilePath: $htmlFilePath'
-        ', selectedShop: ${selectedShop.value}, selectedFileFormat: ${selectedFileFormat.value})';
+        ', selectedShop: ${selectedShop.shopName}, selectedFileFormat: ${selectedFileFormat.fileFormatName})';
   }
 
   /// Read receipt products from text file.
@@ -44,13 +45,13 @@ class Kassakuitti {
       return await strings2ReceiptProducts(textFilePath);
     } else {
       throw ArgumentError(
-          'selectedShop should be ${SelectedShop.sKaupat.value}, but it was ${selectedShop.value}.');
+          'selectedShop should be ${SelectedShop.sKaupat.shopName}, but it was ${selectedShop.shopName}.');
     }
   }
 
   /// Read EAN products from html file.
   Future<List<EANProduct>> readEANProducts() async {
-    return selectedShop.value == SelectedShop.sKaupat.value
+    return selectedShop.shopName == SelectedShop.sKaupat.shopName
         ? await s_kaupat.html2EANProducts(htmlFilePath)
         : await k_ruoka.html2EANProducts(htmlFilePath);
   }
