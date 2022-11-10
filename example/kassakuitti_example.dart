@@ -1,9 +1,8 @@
 import 'package:kassakuitti/kassakuitti.dart';
 
 void main() async {
-  var selectedShop = SelectedShop.sKaupat; // TODO: Change to your shop
-  var selectedFileFormat =
-      SelectedFileFormat.xlsx; // TODO: Change to your file format
+  var selectedShop = SelectedShop.sKaupat; // or SelectedShop.kRuoka
+  var selectedFileFormat = SelectedFileFormat.xlsx; // or SelectedFileFormat.csv
   String htmlFilePath;
 
   if (selectedShop == SelectedShop.sKaupat) {
