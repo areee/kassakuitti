@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the toString method from the EANProduct class, for the Dart programming language.">
-  <title>toString method - EANProduct class - kassakuitti library - Dart API</title>
+  <meta name="description" content="API docs for the isFruitOrVegetable property from the Product class, for the Dart programming language.">
+  <title>isFruitOrVegetable property - Product class - kassakuitti library - Dart API</title>
 
 
   
@@ -30,10 +30,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">kassakuitti</a></li>
     <li><a href="../../kassakuitti/kassakuitti-library.html">kassakuitti</a></li>
-    <li><a href="../../kassakuitti/EANProduct-class.html">EANProduct</a></li>
-    <li class="self-crumb">toString method</li>
+    <li><a href="../../kassakuitti/Product-class.html">Product</a></li>
+    <li class="self-crumb">isFruitOrVegetable property</li>
   </ol>
-  <div class="self-name">toString</div>
+  <div class="self-name">isFruitOrVegetable</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -44,42 +44,33 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-<h1><span class="kind-method">toString</span> method 
+<h1><span class="kind-property">isFruitOrVegetable</span> property 
     <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
-    <section class="multi-line-signature">
-      
-<div>
-  <ol class="annotation-list">
-    <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
-  </ol>
-</div>
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-<span class="name ">toString</span>(<wbr>)
+        
+<section id="getter">
 
-      <div class="features">override</div>
+<section class="multi-line-signature">
+  <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+  <span class="name ">isFruitOrVegetable</span>
+  
 
-    </section>
-    
-<section class="desc markdown">
-  <p>Override <a href="../../kassakuitti/EANProduct/toString.html">toString</a> method.</p>
 </section>
 
 
-    
+<section class="desc markdown">
+  <p>Is product fruit or vegetable (or other).</p>
+</section>
+
+
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">@override
-String toString() {
-  return &#39;$quantity x&#39;
-      &#39; $name&#39;
-      &#39;${quantity != 1 ? &#39; ($pricePerUnit e &#47; pcs)&#39; : &#39;&#39;}&#39;
-      &#39; = $totalPrice e.&#39;
-      &#39;${eanCode.isNotEmpty ? &#39; EAN: $eanCode.&#39; : &#39;&#39;}&#39;
-      &#39;${moreDetails != null ? &#39; More details: $moreDetails&#39; : &#39;&#39;}&#39;;
-}</code></pre>
+  <pre class="language-dart"><code class="language-dart">bool get isFruitOrVegetable =&gt;
+    eanCode.startsWith(&#39;2&#39;) || eanCode.startsWith(&#39;02&#39;);</code></pre>
+</section>
+
 </section>
 
 
@@ -95,38 +86,35 @@ String toString() {
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
   <li><a href="../../index.html">kassakuitti</a></li>
   <li><a href="../../kassakuitti/kassakuitti-library.html">kassakuitti</a></li>
-  <li><a href="../../kassakuitti/EANProduct-class.html">EANProduct</a></li>
-  <li class="self-crumb">toString method</li>
+  <li><a href="../../kassakuitti/Product-class.html">Product</a></li>
+  <li class="self-crumb">isFruitOrVegetable property</li>
 </ol>
 
 
-    <h5>EANProduct class</h5>
+    <h5>Product class</h5>
     <ol>
 
-        <li class="section-title"><a href="../../kassakuitti/EANProduct-class.html#constructors">Constructors</a></li>
-          <li><a href="../../kassakuitti/EANProduct/EANProduct.html">EANProduct</a></li>
+        <li class="section-title"><a href="../../kassakuitti/Product-class.html#constructors">Constructors</a></li>
+          <li><a href="../../kassakuitti/Product/Product.html">Product</a></li>
 
 
     <li class="section-title">
-      <a href="../../kassakuitti/EANProduct-class.html#instance-properties">Properties</a>
+      <a href="../../kassakuitti/Product-class.html#instance-properties">Properties</a>
     </li>
-    <li class="inherited"><a href="../../kassakuitti/Product/eanCode.html">eanCode</a></li>
+    <li><a href="../../kassakuitti/Product/eanCode.html">eanCode</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li class="inherited"><a href="../../kassakuitti/Product/isFruitOrVegetable.html">isFruitOrVegetable</a></li>
-    <li><a href="../../kassakuitti/EANProduct/isHomeDelivery.html">isHomeDelivery</a></li>
-    <li><a href="../../kassakuitti/EANProduct/isPackagingMaterial.html">isPackagingMaterial</a></li>
-    <li><a href="../../kassakuitti/EANProduct/moreDetails.html">moreDetails</a></li>
-    <li class="inherited"><a href="../../kassakuitti/Product/name.html">name</a></li>
-    <li class="inherited"><a href="../../kassakuitti/Product/pricePerUnit.html">pricePerUnit</a></li>
-    <li class="inherited"><a href="../../kassakuitti/Product/quantity.html">quantity</a></li>
+    <li><a href="../../kassakuitti/Product/isFruitOrVegetable.html">isFruitOrVegetable</a></li>
+    <li><a href="../../kassakuitti/Product/name.html">name</a></li>
+    <li><a href="../../kassakuitti/Product/pricePerUnit.html">pricePerUnit</a></li>
+    <li><a href="../../kassakuitti/Product/quantity.html">quantity</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    <li class="inherited"><a href="../../kassakuitti/Product/totalPrice.html">totalPrice</a></li>
+    <li><a href="../../kassakuitti/Product/totalPrice.html">totalPrice</a></li>
 
-    <li class="section-title"><a href="../../kassakuitti/EANProduct-class.html#instance-methods">Methods</a></li>
+    <li class="section-title inherited"><a href="../../kassakuitti/Product-class.html#instance-methods">Methods</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li><a href="../../kassakuitti/EANProduct/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
-    <li class="section-title inherited"><a href="../../kassakuitti/EANProduct-class.html#operators">Operators</a></li>
+    <li class="section-title inherited"><a href="../../kassakuitti/Product-class.html#operators">Operators</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 

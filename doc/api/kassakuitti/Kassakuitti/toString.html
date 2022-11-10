@@ -64,16 +64,7 @@
     </section>
     
 <section class="desc markdown">
-  <p>A string representation of this object.</p>
-<p>Some classes have a default textual representation,
-often paired with a static <code>parse</code> function (like <a href="https://api.flutter.dev/flutter/dart-core/int/parse.html">int.parse</a>).
-These classes will provide the textual representation as
-their string representation.</p>
-<p>Other classes have no meaningful textual representation
-that a program will care about.
-Such classes will typically override <code>toString</code> to provide
-useful information when inspecting the object,
-mainly for debugging or logging.</p>
+  <p>Override <a href="../../kassakuitti/Kassakuitti/toString.html">toString</a> method.</p>
 </section>
 
 
@@ -83,7 +74,7 @@ mainly for debugging or logging.</p>
   <pre class="language-dart"><code class="language-dart">@override
 String toString() {
   return &#39;Kassakuitti(textFilePath: $textFilePath, htmlFilePath: $htmlFilePath&#39;
-      &#39;, selectedShop: ${selectedShop.value}, selectedFileFormat: ${selectedFileFormat.value})&#39;;
+      &#39;, selectedShop: ${selectedShop.shopName}, selectedFileFormat: ${selectedFileFormat.fileFormatName})&#39;;
 }</code></pre>
 </section>
 
