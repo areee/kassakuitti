@@ -49,6 +49,6 @@ var exportedFilePaths =
 
 This kassakuitti project set started from [dart_kassakuitti_cli](https://github.com/areee/dart_kassakuitti_cli) project in October 2021.
 
-If you would like to contribute, please give an [issue](https://github.com/areee/kassakuitti/issues/new) to discuss about the problem.
+All contributions are welcome. If you would like to contribute, please give an [issue](https://github.com/areee/kassakuitti/issues/new) to discuss about the problem.
 
 Currently this project is authored by [Arttu Ylhävuori](https://www.linkedin.com/in/arttuylh).
