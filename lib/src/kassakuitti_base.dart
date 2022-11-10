@@ -11,9 +11,16 @@ import 'package:tuple/tuple.dart';
 
 /// Creates a new [Kassakuitti] instance.
 class Kassakuitti {
+  /// Text file containing receipt products.
   String? textFilePath;
+
+  /// HTML file containing EAN products.
   String htmlFilePath;
+
+  /// Selected shop (sKaupat = default or kRuoka).
   SelectedShop selectedShop;
+
+  /// Selected file format (xlsx = default or csv).
   SelectedFileFormat selectedFileFormat;
 
   /// Creates a new [Kassakuitti] instance.
