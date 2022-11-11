@@ -1,4 +1,4 @@
-# kassakuitti
+[![Dart CI](https://github.com/areee/kassakuitti/actions/workflows/dart.yml/badge.svg)](https://github.com/areee/kassakuitti/actions/workflows/dart.yml)
 
 A Dart package for handling a cash receipt coming from S-kaupat or K-ruoka (two Finnish food online stores).
 
@@ -35,7 +35,7 @@ To get a text file, follow these instructions:
 ```dart
 /*
     Create a Kassakuitti instance using default values:
-        selectedStore = selectedShop = SelectedShop.sKaupat
+        selectedShop = SelectedShop.sKaupat
         selectedFileFormat = SelectedFileFormat.xlsx
 */
 var kassakuitti = Kassakuitti('path/to/textFile.txt', 'path/to/htmlFile.html');
@@ -51,4 +51,4 @@ This kassakuitti project set started from [dart_kassakuitti_cli](https://github.
 
 All contributions are welcome. If you would like to contribute, please give an [issue](https://github.com/areee/kassakuitti/issues/new) to discuss about the problem.
 
-Currently this project is authored by [Arttu Ylhävuori](https://www.linkedin.com/in/arttuylh).
+This project is authored by [Arttu Ylhävuori](https://www.linkedin.com/in/arttuylh).

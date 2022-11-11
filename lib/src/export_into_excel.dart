@@ -12,7 +12,7 @@ import 'package:path/path.dart';
 
 /// Export receipt products into Excel (xlsx) file.
 Future<String> exportReceiptProductsIntoExcel(
-    List<ReceiptProduct> receiptProducts) async {
+    List<ReceiptProduct> receiptProducts, String? filePath) async {
   var excel = Excel.createExcel();
   var sheetObject = excel.sheets[excel.getDefaultSheet()];
 
@@ -51,12 +51,12 @@ Future<String> exportReceiptProductsIntoExcel(
   }
   // Save to the Excel (xlsx) file:
   return await _saveToExcelFile(
-      excel, 'receipt_products_${formattedDateTime()}');
+      excel, 'receipt_products_${formattedDateTime()}', filePath);
 }
 
 /// Export EAN products into Excel (xlsx) file.
-Future<String> exportEANProductsIntoExcel(
-    List<EANProduct> eanProducts, SelectedShop selectedShop) async {
+Future<String> exportEANProductsIntoExcel(List<EANProduct> eanProducts,
+    SelectedShop selectedShop, String? filePath) async {
   var excel = Excel.createExcel();
   var sheetObject = excel.sheets[excel.getDefaultSheet()];
 
@@ -107,16 +107,21 @@ Future<String> exportEANProductsIntoExcel(
   }
 
   // Save to the Excel (xlsx) file:
-  return await _saveToExcelFile(
-      excel, '${selectedShop.name}_ean_products_${formattedDateTime()}');
+  return await _saveToExcelFile(excel,
+      '${selectedShop.name}_ean_products_${formattedDateTime()}', filePath);
 }
 
 /// Save to the Excel (xlsx) file.
-Future<String> _saveToExcelFile(Excel excel, fileName) async {
+Future<String> _saveToExcelFile(Excel excel, fileName, String? filePath) async {
+  String finalFilePath;
+  if (filePath != null) {
+    finalFilePath = join(filePath, '$fileName.xlsx');
+  } else {
+    finalFilePath = join(
+        replaceTildeWithHomeDirectory(userDownloadsPath), '$fileName.xlsx');
+  }
   var fileBytes = excel.save();
-  var filePath =
-      join(replaceTildeWithHomeDirectory(exportFilePath), '$fileName.xlsx');
-  var file = File(filePath);
+  var file = File(finalFilePath);
   await file.writeAsBytes(fileBytes!);
-  return filePath;
+  return finalFilePath;
 }

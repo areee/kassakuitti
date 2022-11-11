@@ -1,5 +1,5 @@
 /// Export file path.
-const String exportFilePath = '~/Downloads';
+const String userDownloadsPath = '~/Downloads';
 
 /// Header for products.
 const List<String> header = [
