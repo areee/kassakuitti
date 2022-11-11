@@ -10,7 +10,7 @@ import 'package:path/path.dart';
 
 /// Export receipt products into CSV file.
 Future<String> exportReceiptProductsIntoCsv(
-    List<ReceiptProduct> receiptProducts) async {
+    List<ReceiptProduct> receiptProducts, String? filePath) async {
   var csv = StringBuffer();
 
   // Write the header.
@@ -41,12 +41,12 @@ Future<String> exportReceiptProductsIntoCsv(
   }
   // Save to the CSV file:
   return await _saveToCsvFile(
-      csv.toString(), 'receipt_products_${formattedDateTime()}');
+      csv.toString(), 'receipt_products_${formattedDateTime()}', filePath);
 }
 
 /// Export EAN products into CSV file.
-Future<String> exportEANProductsIntoCsv(
-    List<EANProduct> eanProducts, SelectedShop selectedShop) async {
+Future<String> exportEANProductsIntoCsv(List<EANProduct> eanProducts,
+    SelectedShop selectedShop, String? filePath) async {
   var csv = StringBuffer();
 
   // Write the header:
@@ -68,14 +68,21 @@ Future<String> exportEANProductsIntoCsv(
 
   // Save to the CSV file:
   return await _saveToCsvFile(csv.toString(),
-      '${selectedShop.name}_ean_products_${formattedDateTime()}');
+      '${selectedShop.name}_ean_products_${formattedDateTime()}', filePath);
 }
 
 /// Save to the CSV file.
-Future<String> _saveToCsvFile(String csv, String fileName) async {
-  var filePath =
-      join(replaceTildeWithHomeDirectory(exportFilePath), '$fileName.csv');
-  var file = File(filePath);
+Future<String> _saveToCsvFile(
+    String csv, String fileName, String? filePath) async {
+  String finalFilePath;
+  if (filePath != null) {
+    finalFilePath = join(filePath, '$fileName.csv');
+  } else {
+    finalFilePath =
+        join(replaceTildeWithHomeDirectory(userDownloadsPath), '$fileName.csv');
+  }
+  var file = File(finalFilePath);
+  print('File path: ${file.path}');
   await file.writeAsString(csv.toString());
-  return filePath;
+  return finalFilePath;
 }

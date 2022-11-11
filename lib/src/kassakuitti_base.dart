@@ -59,7 +59,7 @@ class Kassakuitti {
   /// Export recept products and EAN products into CSV or Excel file.
   /// Returns the path(s) of the exported file(s).
   Future<Tuple2<String?, String>> export(List<ReceiptProduct>? receiptProducts,
-      List<EANProduct> eanProducts) async {
+      List<EANProduct> eanProducts, String? filePath) async {
     if (selectedShop == SelectedShop.sKaupat) {
       // Selected shop is S-kaupat
       if (receiptProducts == null) {
@@ -67,23 +67,31 @@ class Kassakuitti {
       }
       if (selectedFileFormat == SelectedFileFormat.csv) {
         // Export into CSV file
-        return Tuple2(await exportReceiptProductsIntoCsv(receiptProducts),
-            await exportEANProductsIntoCsv(eanProducts, selectedShop));
+        return Tuple2(
+            await exportReceiptProductsIntoCsv(receiptProducts, filePath),
+            await exportEANProductsIntoCsv(
+                eanProducts, selectedShop, filePath));
       } else {
         // Export into Excel file
-        return Tuple2(await exportReceiptProductsIntoExcel(receiptProducts),
-            await exportEANProductsIntoExcel(eanProducts, selectedShop));
+        return Tuple2(
+            await exportReceiptProductsIntoExcel(receiptProducts, filePath),
+            await exportEANProductsIntoExcel(
+                eanProducts, selectedShop, filePath));
       }
     } else {
       // Selected shop is K-ruoka
       if (selectedFileFormat == SelectedFileFormat.csv) {
         // Export into CSV file
         return Tuple2(
-            null, await exportEANProductsIntoCsv(eanProducts, selectedShop));
+            null,
+            await exportEANProductsIntoCsv(
+                eanProducts, selectedShop, filePath));
       } else {
         // Export into Excel file
         return Tuple2(
-            null, await exportEANProductsIntoExcel(eanProducts, selectedShop));
+            null,
+            await exportEANProductsIntoExcel(
+                eanProducts, selectedShop, filePath));
       }
     }
   }

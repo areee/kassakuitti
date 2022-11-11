@@ -3,8 +3,6 @@ description: A Dart package for handling a cash receipt coming from S-kaupat or 
 version: 0.1.0
 repository: https://github.com/areee/kassakuitti
 
-publish_to: 'none' # for now, do not publish the package into pub.dev
-
 environment:
   sdk: '>=2.18.4 <3.0.0'
 
