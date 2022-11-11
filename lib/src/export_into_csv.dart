@@ -82,7 +82,6 @@ Future<String> _saveToCsvFile(
         join(replaceTildeWithHomeDirectory(userDownloadsPath), '$fileName.csv');
   }
   var file = File(finalFilePath);
-  print('File path: ${file.path}');
   await file.writeAsString(csv.toString());
   return finalFilePath;
 }

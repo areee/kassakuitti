@@ -32,7 +32,7 @@ void main() async {
     }
 
     var exportedFilePaths =
-        await kassakuitti.export(receiptProducts, eanProducts, null);
+        await kassakuitti.export(receiptProducts, eanProducts);
 
     print('Exported file paths: $exportedFilePaths');
   } else {
@@ -51,7 +51,7 @@ void main() async {
       print(element);
     }
 
-    var exportedFilePaths = await kassakuitti.export(null, eanProducts, null);
+    var exportedFilePaths = await kassakuitti.export(null, eanProducts);
     print('Exported file paths: $exportedFilePaths');
   }
 }

@@ -58,8 +58,9 @@ class Kassakuitti {
 
   /// Export recept products and EAN products into CSV or Excel file.
   /// Returns the path(s) of the exported file(s).
-  Future<Tuple2<String?, String>> export(List<ReceiptProduct>? receiptProducts,
-      List<EANProduct> eanProducts, String? filePath) async {
+  Future<Tuple2<String?, String>> export(
+      List<ReceiptProduct>? receiptProducts, List<EANProduct> eanProducts,
+      {String? filePath}) async {
     if (selectedShop == SelectedShop.sKaupat) {
       // Selected shop is S-kaupat
       if (receiptProducts == null) {
