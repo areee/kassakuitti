@@ -1,4 +1,4 @@
-import 'package:excel/excel.dart';
+import 'package:flutter_excel/excel.dart';
 
 /// Extension for [Sheet].
 extension SheetExtension on Sheet {
