@@ -1,3 +1,9 @@
+## 0.1.1
+
+- Fix two pub publish warnings:
+    - rename LICENSE.md to LICENSE and
+    - change excel dependency to flutter_excel (a prerelease versus a stable release).
+
 ## 0.1.0
 
 - Add a minimum viable product (MVP). It includes:

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:excel/excel.dart';
+import 'package:flutter_excel/excel.dart';
 import 'package:kassakuitti/src/constants.dart';
 import 'package:kassakuitti/src/models/ean_product.dart';
 import 'package:kassakuitti/src/models/receipt_product.dart';
