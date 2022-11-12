@@ -498,8 +498,8 @@ void main() {
       expect(receiptProducts[1].pricePerUnit, null);
       expect(receiptProducts[2].name, 'kurkku suomi');
       expect(receiptProducts[2].totalPrice, 4.5);
-      expect(receiptProducts[2].quantity, 1);
-      expect(receiptProducts[2].pricePerUnit, null);
+      expect(receiptProducts[2].quantity, 3);
+      expect(receiptProducts[2].pricePerUnit, 1.5);
       expect(receiptProducts[3].name, 'pakkausmateriaalit');
       expect(receiptProducts[3].totalPrice, 0.6);
       expect(receiptProducts[3].quantity, 1);
