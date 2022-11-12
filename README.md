@@ -1,5 +1,7 @@
 [![Dart CI](https://github.com/areee/kassakuitti/actions/workflows/dart.yml/badge.svg)](https://github.com/areee/kassakuitti/actions/workflows/dart.yml)
+[![codecov](https://codecov.io/github/areee/kassakuitti/branch/main/graph/badge.svg?token=3URJPD5HD1)](https://codecov.io/github/areee/kassakuitti)
 [![pub package](https://img.shields.io/pub/v/kassakuitti.svg)](https://pub.dev/packages/kassakuitti)
+[![license](https://img.shields.io/github/license/areee/kassakuitti)](https://github.com/areee/kassakuitti/blob/main/LICENSE)
 
 A Dart package for handling a cash receipt coming from S-kaupat or K-ruoka (two Finnish food online stores).
 
