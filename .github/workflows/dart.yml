@@ -7,21 +7,33 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  analyze:
     runs-on: ubuntu-latest
-
+    strategy:
+      fail-fast: false
     steps:
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1.3
-
-      - name: Install dependencies
+      - id: install
+        name: Install dependencies
         run: dart pub get
-
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
-
+        if: always() && steps.install.outcome == 'success'
       - name: Analyze project source
         run: dart analyze --fatal-infos
+        if: always() && steps.install.outcome == 'success'
 
+  test:
+    needs: analyze
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dart@v1.3
+      - name: Install dependencies
+        run: dart pub get
       - name: Run tests
         run: dart test
