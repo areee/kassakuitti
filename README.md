@@ -52,4 +52,6 @@ This kassakuitti project set started from [dart_kassakuitti_cli](https://github.
 
 All contributions are welcome. If you would like to contribute, please give an [issue](https://github.com/areee/kassakuitti/issues/new) to discuss about the problem.
 
+There are [wiki pages](https://github.com/areee/kassakuitti/wiki) for this project. Please update them if you find some useful tricks for using Dart. Currently, there's only instructions for generating locally a coverage report.
+
 This project is authored by [Arttu Ylhävuori](https://www.linkedin.com/in/arttuylh).
