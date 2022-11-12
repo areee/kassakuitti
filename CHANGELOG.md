@@ -1,3 +1,9 @@
+# 0.1.3
+
+- A bug: currently, S-kaupat HTML file has a price per unit as a price for a product, not a total price as earlier. Fix the parsing logic of S-kaupat HTML file.
+- Fix 'Reading receiptProducts work' test.
+- Small price fixes into cash receipt example & S-kaupat HTML example.
+
 # 0.1.2
 
 - S-kaupat had changed a bit their order summary page -> fixed the HTML parsing of S-kaupat.

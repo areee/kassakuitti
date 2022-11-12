@@ -23,7 +23,7 @@ void _html2EANProductsFromDocument(
   var childrenOfAllProductsDiv = allProductsDiv.children;
   for (var i = 1; i < childrenOfAllProductsDiv.length; i++) {
     var product = childrenOfAllProductsDiv[i];
-    var productPrice = double.parse(product
+    var pricePerUnit = double.parse(product
         .children[1].children[1].children[0].text
         .trim()
         .removeAllEuros()
@@ -44,12 +44,10 @@ void _html2EANProductsFromDocument(
           .trim()
           .removeAllNewLines()
           .replaceAllWhitespacesWithSingleSpace(),
-      totalPrice: productPrice,
+      totalPrice: (pricePerUnit * quantity).toPrecision(2),
       quantity: quantity,
       eanCode: product.attributes['data-product-id'] ?? '',
-      pricePerUnit: quantity == 1 || quantity == 0
-          ? null
-          : (productPrice / quantity).toPrecision(2),
+      pricePerUnit: quantity == 1 || quantity == 0 ? null : pricePerUnit,
     ));
   }
 }
