@@ -23,18 +23,24 @@ void _html2EANProductsFromDocument(
   var childrenOfAllProductsDiv = allProductsDiv.children;
   for (var i = 1; i < childrenOfAllProductsDiv.length; i++) {
     var product = childrenOfAllProductsDiv[i];
-    var productPrice = double.parse(product.children[0].children[0].children[1]
-        .children[1].children[1].children[1].text
+    var productPrice = double.parse(product
+        .children[1].children[1].children[0].text
         .trim()
         .removeAllEuros()
         .replaceAllCommasWithDots());
-    var quantity = double.parse(product.children[0].children[0].children[1]
-            .children[1].children[1].children[0].children[0].text)
-        .ceil();
 
+    /*
+      Try to get the second child of the product (quantity div).
+      If it doesn't exist (e.g. packaging material payment and home delivery don't have quantity div),
+      then set quantity to 1.
+    */
+    int quantity = 1;
+    if (product.children.length > 2) {
+      quantity =
+          double.parse(product.children[2].children[0].children[0].text).ceil();
+    }
     eanProducts.add(EANProduct(
-      name: product
-          .children[0].children[0].children[1].children[0].children[0].text
+      name: product.children[1].children[0].text
           .trim()
           .removeAllNewLines()
           .replaceAllWhitespacesWithSingleSpace(),

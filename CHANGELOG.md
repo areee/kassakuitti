@@ -1,3 +1,9 @@
+# 0.1.2
+
+- S-kaupat had changed a bit their order summary page -> fixed the HTML parsing of S-kaupat.
+    - Especially product price, quantity and name had changed.
+    - In the current S-kaupat HTML file the packaging material payment and the home delivery don't have quantity divs anymore.
+
 ## 0.1.1
 
 - Fix two pub publish warnings:
