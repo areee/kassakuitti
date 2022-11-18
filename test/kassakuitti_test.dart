@@ -57,41 +57,30 @@ void main() {
       expect(eanProducts, isNotNull);
     });
 
-    test('Receipt products type is ok', () {
-      receiptProducts.then(
-        (x) {
-          expect(x, isA<List<ReceiptProduct>>());
-        },
-      );
+    test('Receipt products type is ok', () async {
+      expect(await receiptProducts, isA<List<ReceiptProduct>>());
     });
 
-    test('EAN products type is ok', () {
-      eanProducts.then(
-        (x) {
-          expect(x, isA<List<EANProduct>>());
-        },
-      );
+    test('EAN products type is ok', () async {
+      expect(await eanProducts, isA<List<EANProduct>>());
     });
 
-    test('Receipt products\' amount is non-zero', () {
-      receiptProducts.then(
-        (x) {
-          expect(x.length, isNonZero);
-        },
-      );
+    test('Receipt products\' amount is non-zero', () async {
+      expect((await receiptProducts).length, isNonZero);
     });
 
-    test('EAN products\' amount is non-zero', () {
-      eanProducts.then(
-        (x) {
-          expect(x.length, isNonZero);
-        },
-      );
+    test('EAN products\' amount is non-zero', () async {
+      expect((await eanProducts).length, isNonZero);
     });
 
     test('Null text file path throws an argument error', () {
       final kassakuitti = Kassakuitti(null, 'example/s-kaupat_example.html');
       expect(kassakuitti.readReceiptProducts(), throwsArgumentError);
+    });
+
+    test('Exception is thrown when receiptProducts is null in export',
+        () async {
+      expect(kassakuitti.export(null, await eanProducts), throwsArgumentError);
     });
 
     test('Exported receiptProducts is not null', () async {
@@ -204,41 +193,30 @@ void main() {
       expect(eanProducts, isNotNull);
     });
 
-    test('Receipt products type is ok', () {
-      receiptProducts.then(
-        (x) {
-          expect(x, isA<List<ReceiptProduct>>());
-        },
-      );
+    test('Receipt products type is ok', () async {
+      expect(await receiptProducts, isA<List<ReceiptProduct>>());
     });
 
-    test('EAN products type is ok', () {
-      eanProducts.then(
-        (x) {
-          expect(x, isA<List<EANProduct>>());
-        },
-      );
+    test('EAN products type is ok', () async {
+      expect(await eanProducts, isA<List<EANProduct>>());
     });
 
-    test('Receipt products\' amount is non-zero', () {
-      receiptProducts.then(
-        (x) {
-          expect(x.length, isNonZero);
-        },
-      );
+    test('Receipt products\' amount is non-zero', () async {
+      expect((await receiptProducts).length, isNonZero);
     });
 
-    test('EAN products\' amount is non-zero', () {
-      eanProducts.then(
-        (x) {
-          expect(x.length, isNonZero);
-        },
-      );
+    test('EAN products\' amount is non-zero', () async {
+      expect((await eanProducts).length, isNonZero);
     });
 
     test('Null text file path throws an argument error', () {
       final kassakuitti = Kassakuitti(null, 'example/s-kaupat_example.html');
       expect(kassakuitti.readReceiptProducts(), throwsArgumentError);
+    });
+
+    test('Exception is thrown when receiptProducts is null in export',
+        () async {
+      expect(kassakuitti.export(null, await eanProducts), throwsArgumentError);
     });
 
     test('Exported receiptProducts is not null', () async {
@@ -347,20 +325,12 @@ void main() {
       expect(eanProducts, isNotNull);
     });
 
-    test('EAN products type is ok', () {
-      eanProducts.then(
-        (x) {
-          expect(x, isA<List<EANProduct>>());
-        },
-      );
+    test('EAN products type is ok', () async {
+      expect(await eanProducts, isA<List<EANProduct>>());
     });
 
-    test('EAN products\' amount is non-zero', () {
-      eanProducts.then(
-        (x) {
-          expect(x.length, isNonZero);
-        },
-      );
+    test('EAN products\' amount is non-zero', () async {
+      expect((await eanProducts).length, isNonZero);
     });
 
     test('Reading receipt products throws an argument error', () {
@@ -419,20 +389,12 @@ void main() {
       expect(eanProducts, isNotNull);
     });
 
-    test('EAN products type is ok', () {
-      eanProducts.then(
-        (x) {
-          expect(x, isA<List<EANProduct>>());
-        },
-      );
+    test('EAN products type is ok', () async {
+      expect(await eanProducts, isA<List<EANProduct>>());
     });
 
-    test('EAN products\' amount is non-zero', () {
-      eanProducts.then(
-        (x) {
-          expect(x.length, isNonZero);
-        },
-      );
+    test('EAN products\' amount is non-zero', () async {
+      expect((await eanProducts).length, isNonZero);
     });
 
     test('Reading receipt products throws an argument error', () {
