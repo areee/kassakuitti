@@ -36,8 +36,9 @@ void _html2EANProductsFromDocument(
     */
     int quantity = 1;
     if (product.children.length > 2) {
-      quantity =
-          double.parse(product.children[2].children[0].children[0].text).ceil();
+      quantity = double.parse(product.children[2].children[0].children[0].text
+              .replaceAllCommasWithDots())
+          .ceil();
     }
     eanProducts.add(EANProduct(
       name: product.children[1].children[0].text
