@@ -36,6 +36,82 @@ void main() {
     });
   });
 
+  group('In ReceiptProduct class', () {
+    final receiptProduct = ReceiptProduct(
+        name: 'test',
+        totalPrice: 1.0,
+        quantity: 2,
+        pricePerUnit: 0.5,
+        eanCode: '1234567890123',
+        isDiscountCounted: false);
+
+    setUp(() {
+      // Additional setup goes here.
+    });
+
+    test('Constructor works', () {
+      expect(receiptProduct.name, 'test');
+      expect(receiptProduct.totalPrice, 1.0);
+      expect(receiptProduct.quantity, 2);
+      expect(receiptProduct.pricePerUnit, 0.5);
+      expect(receiptProduct.eanCode, '1234567890123');
+      expect(receiptProduct.isDiscountCounted, false);
+    });
+
+    test('ToString works', () {
+      expect(receiptProduct.toString(),
+          '2 x test (0.5 e / pcs) = 1.0 e. EAN: 1234567890123.');
+    });
+
+    test('Default values work', () {
+      final receiptProductDefaultValues = ReceiptProduct();
+      expect(receiptProductDefaultValues.name, 'Default receipt product name');
+      expect(receiptProductDefaultValues.totalPrice, 0.00);
+      expect(receiptProductDefaultValues.quantity, 1);
+      expect(receiptProductDefaultValues.pricePerUnit, null);
+      expect(receiptProductDefaultValues.eanCode, '');
+      expect(receiptProductDefaultValues.isDiscountCounted, false);
+    });
+  });
+
+  group('In EANProduct class', () {
+    final eanProduct = EANProduct(
+        name: 'test',
+        totalPrice: 1.0,
+        quantity: 2,
+        pricePerUnit: 0.5,
+        eanCode: '1234567890123',
+        moreDetails: 'test details');
+
+    setUp(() {
+      // Additional setup goes here.
+    });
+
+    test('Constructor works', () {
+      expect(eanProduct.name, 'test');
+      expect(eanProduct.totalPrice, 1.0);
+      expect(eanProduct.quantity, 2);
+      expect(eanProduct.pricePerUnit, 0.5);
+      expect(eanProduct.eanCode, '1234567890123');
+      expect(eanProduct.moreDetails, 'test details');
+    });
+
+    test('ToString works', () {
+      expect(eanProduct.toString(),
+          '2 x test (0.5 e / pcs) = 1.0 e. EAN: 1234567890123. More details: test details');
+    });
+
+    test('Default values work', () {
+      final eanProductDefaultValues = EANProduct();
+      expect(eanProductDefaultValues.name, 'Default EAN product name');
+      expect(eanProductDefaultValues.totalPrice, 0.00);
+      expect(eanProductDefaultValues.quantity, 1);
+      expect(eanProductDefaultValues.pricePerUnit, null);
+      expect(eanProductDefaultValues.eanCode, '');
+      expect(eanProductDefaultValues.moreDetails, null);
+    });
+  });
+
   group('When the shop is S-kaupat and the format is CSV', () {
     final kassakuitti = Kassakuitti(
         'example/cash_receipt_example.txt', 'example/s-kaupat_example.html',
