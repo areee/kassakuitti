@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:kassakuitti/kassakuitti.dart';
+import 'package:kassakuitti/src/utils/home_directory_helper.dart';
 import 'package:mime/mime.dart';
 import 'package:test/test.dart';
 
@@ -36,6 +37,82 @@ void main() {
     });
   });
 
+  group('In ReceiptProduct class', () {
+    final receiptProduct = ReceiptProduct(
+        name: 'test',
+        totalPrice: 1.0,
+        quantity: 2,
+        pricePerUnit: 0.5,
+        eanCode: '1234567890123',
+        isDiscountCounted: false);
+
+    setUp(() {
+      // Additional setup goes here.
+    });
+
+    test('Constructor works', () {
+      expect(receiptProduct.name, 'test');
+      expect(receiptProduct.totalPrice, 1.0);
+      expect(receiptProduct.quantity, 2);
+      expect(receiptProduct.pricePerUnit, 0.5);
+      expect(receiptProduct.eanCode, '1234567890123');
+      expect(receiptProduct.isDiscountCounted, false);
+    });
+
+    test('ToString works', () {
+      expect(receiptProduct.toString(),
+          '2 x test (0.5 e / pcs) = 1.0 e. EAN: 1234567890123.');
+    });
+
+    test('Default values work', () {
+      final receiptProductDefaultValues = ReceiptProduct();
+      expect(receiptProductDefaultValues.name, 'Default receipt product name');
+      expect(receiptProductDefaultValues.totalPrice, 0.00);
+      expect(receiptProductDefaultValues.quantity, 1);
+      expect(receiptProductDefaultValues.pricePerUnit, null);
+      expect(receiptProductDefaultValues.eanCode, '');
+      expect(receiptProductDefaultValues.isDiscountCounted, false);
+    });
+  });
+
+  group('In EANProduct class', () {
+    final eanProduct = EANProduct(
+        name: 'test',
+        totalPrice: 1.0,
+        quantity: 2,
+        pricePerUnit: 0.5,
+        eanCode: '1234567890123',
+        moreDetails: 'test details');
+
+    setUp(() {
+      // Additional setup goes here.
+    });
+
+    test('Constructor works', () {
+      expect(eanProduct.name, 'test');
+      expect(eanProduct.totalPrice, 1.0);
+      expect(eanProduct.quantity, 2);
+      expect(eanProduct.pricePerUnit, 0.5);
+      expect(eanProduct.eanCode, '1234567890123');
+      expect(eanProduct.moreDetails, 'test details');
+    });
+
+    test('ToString works', () {
+      expect(eanProduct.toString(),
+          '2 x test (0.5 e / pcs) = 1.0 e. EAN: 1234567890123. More details: test details');
+    });
+
+    test('Default values work', () {
+      final eanProductDefaultValues = EANProduct();
+      expect(eanProductDefaultValues.name, 'Default EAN product name');
+      expect(eanProductDefaultValues.totalPrice, 0.00);
+      expect(eanProductDefaultValues.quantity, 1);
+      expect(eanProductDefaultValues.pricePerUnit, null);
+      expect(eanProductDefaultValues.eanCode, '');
+      expect(eanProductDefaultValues.moreDetails, null);
+    });
+  });
+
   group('When the shop is S-kaupat and the format is CSV', () {
     final kassakuitti = Kassakuitti(
         'example/cash_receipt_example.txt', 'example/s-kaupat_example.html',
@@ -57,41 +134,30 @@ void main() {
       expect(eanProducts, isNotNull);
     });
 
-    test('Receipt products type is ok', () {
-      receiptProducts.then(
-        (x) {
-          expect(x, isA<List<ReceiptProduct>>());
-        },
-      );
+    test('Receipt products type is ok', () async {
+      expect(await receiptProducts, isA<List<ReceiptProduct>>());
     });
 
-    test('EAN products type is ok', () {
-      eanProducts.then(
-        (x) {
-          expect(x, isA<List<EANProduct>>());
-        },
-      );
+    test('EAN products type is ok', () async {
+      expect(await eanProducts, isA<List<EANProduct>>());
     });
 
-    test('Receipt products\' amount is non-zero', () {
-      receiptProducts.then(
-        (x) {
-          expect(x.length, isNonZero);
-        },
-      );
+    test('Receipt products\' amount is non-zero', () async {
+      expect((await receiptProducts).length, isNonZero);
     });
 
-    test('EAN products\' amount is non-zero', () {
-      eanProducts.then(
-        (x) {
-          expect(x.length, isNonZero);
-        },
-      );
+    test('EAN products\' amount is non-zero', () async {
+      expect((await eanProducts).length, isNonZero);
     });
 
     test('Null text file path throws an argument error', () {
       final kassakuitti = Kassakuitti(null, 'example/s-kaupat_example.html');
       expect(kassakuitti.readReceiptProducts(), throwsArgumentError);
+    });
+
+    test('Exception is thrown when receiptProducts is null in export',
+        () async {
+      expect(kassakuitti.export(null, await eanProducts), throwsArgumentError);
     });
 
     test('Exported receiptProducts is not null', () async {
@@ -204,41 +270,30 @@ void main() {
       expect(eanProducts, isNotNull);
     });
 
-    test('Receipt products type is ok', () {
-      receiptProducts.then(
-        (x) {
-          expect(x, isA<List<ReceiptProduct>>());
-        },
-      );
+    test('Receipt products type is ok', () async {
+      expect(await receiptProducts, isA<List<ReceiptProduct>>());
     });
 
-    test('EAN products type is ok', () {
-      eanProducts.then(
-        (x) {
-          expect(x, isA<List<EANProduct>>());
-        },
-      );
+    test('EAN products type is ok', () async {
+      expect(await eanProducts, isA<List<EANProduct>>());
     });
 
-    test('Receipt products\' amount is non-zero', () {
-      receiptProducts.then(
-        (x) {
-          expect(x.length, isNonZero);
-        },
-      );
+    test('Receipt products\' amount is non-zero', () async {
+      expect((await receiptProducts).length, isNonZero);
     });
 
-    test('EAN products\' amount is non-zero', () {
-      eanProducts.then(
-        (x) {
-          expect(x.length, isNonZero);
-        },
-      );
+    test('EAN products\' amount is non-zero', () async {
+      expect((await eanProducts).length, isNonZero);
     });
 
     test('Null text file path throws an argument error', () {
       final kassakuitti = Kassakuitti(null, 'example/s-kaupat_example.html');
       expect(kassakuitti.readReceiptProducts(), throwsArgumentError);
+    });
+
+    test('Exception is thrown when receiptProducts is null in export',
+        () async {
+      expect(kassakuitti.export(null, await eanProducts), throwsArgumentError);
     });
 
     test('Exported receiptProducts is not null', () async {
@@ -347,20 +402,12 @@ void main() {
       expect(eanProducts, isNotNull);
     });
 
-    test('EAN products type is ok', () {
-      eanProducts.then(
-        (x) {
-          expect(x, isA<List<EANProduct>>());
-        },
-      );
+    test('EAN products type is ok', () async {
+      expect(await eanProducts, isA<List<EANProduct>>());
     });
 
-    test('EAN products\' amount is non-zero', () {
-      eanProducts.then(
-        (x) {
-          expect(x.length, isNonZero);
-        },
-      );
+    test('EAN products\' amount is non-zero', () async {
+      expect((await eanProducts).length, isNonZero);
     });
 
     test('Reading receipt products throws an argument error', () {
@@ -419,20 +466,12 @@ void main() {
       expect(eanProducts, isNotNull);
     });
 
-    test('EAN products type is ok', () {
-      eanProducts.then(
-        (x) {
-          expect(x, isA<List<EANProduct>>());
-        },
-      );
+    test('EAN products type is ok', () async {
+      expect(await eanProducts, isA<List<EANProduct>>());
     });
 
-    test('EAN products\' amount is non-zero', () {
-      eanProducts.then(
-        (x) {
-          expect(x.length, isNonZero);
-        },
-      );
+    test('EAN products\' amount is non-zero', () async {
+      expect((await eanProducts).length, isNonZero);
     });
 
     test('Reading receipt products throws an argument error', () {
@@ -588,5 +627,22 @@ void main() {
       expect(eanProducts[4].moreDetails,
           'TODO: fill in the amount of packaging materials and the total price.');
     }));
+  });
+
+  group('In home directory helper', () {
+    setUp(() {
+      // Additional setup goes here.
+    });
+
+    test('Reading home directory works', () {
+      final homeDir = getUserHomeDirectory();
+      expect(homeDir, isNotNull);
+    });
+
+    test('Replacing tilde with home directory works', () {
+      final path = '/test';
+      final replacedPath = replaceTildeWithHomeDirectory('~$path');
+      expect(replacedPath, '${getUserHomeDirectory()}$path');
+    });
   });
 }
