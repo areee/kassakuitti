@@ -24,4 +24,9 @@ extension StringExtension on String {
   String removeAllKplsAndKgs() {
     return replaceAll('kpl', '').replaceAll('kg', '');
   }
+
+  /// Split the string by two or more whitespaces.
+  List<String> splitByTwoOrMoreWhitespaces() {
+    return split(RegExp(r'\s{2,}'));
+  }
 }

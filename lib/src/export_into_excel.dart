@@ -38,7 +38,7 @@ Future<String> exportReceiptProductsIntoExcel(
       product.eanCode,
     ];
     if (discountCounted) {
-      productDataList.add(product.isDiscountCounted);
+      productDataList.add(product.isDiscountCounted ? 'yes' : '');
     }
     sheetObject?.insertRowIterables(
         productDataList, receiptProducts.indexOf(product) + 1);
@@ -47,6 +47,12 @@ Future<String> exportReceiptProductsIntoExcel(
     if (product.isFruitOrVegetable) {
       sheetObject?.updateSelectedRowStyle(receiptProducts.indexOf(product) + 1,
           CellStyle(backgroundColorHex: '#00FF00'));
+    }
+
+    // If the product is a discount, change the background color to yellow.
+    if (product.isDiscountCounted) {
+      sheetObject?.updateSelectedRowStyle(receiptProducts.indexOf(product) + 1,
+          CellStyle(backgroundColorHex: '#FFFF00'));
     }
   }
   // Save to the Excel (xlsx) file:

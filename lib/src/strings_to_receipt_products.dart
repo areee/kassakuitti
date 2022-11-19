@@ -66,12 +66,12 @@ void _handleRefundRow(RowHelper helper) {
 void _handleDiscountOrCampaignRow(
     String row, List<ReceiptProduct> receiptProducts) {
   /*
-    Split by 12-33 whitespaces.
+    Split by two or more whitespaces.
     An example of a discount row:
     S-Etu alennus                        0,89-
   */
-  var splittedItems = row.split(RegExp(r'\s{12,33}'));
-  var discountPrice = double.parse(splittedItems[1]
+  var items = row.splitByTwoOrMoreWhitespaces();
+  var discountPrice = double.parse(items[1]
       .replaceAll(RegExp(r'\-'), '') // Remove minus sign.
       .replaceAllCommasWithDots());
 
@@ -91,11 +91,11 @@ void _handleDiscountOrCampaignRow(
 void _handleQuantityAndPricePerUnitRow(
     String row, List<ReceiptProduct> receiptProducts) {
   /*
-    Split by 6-7 whitespaces between quantity and price per unit.
+    Split by two or more whitespaces between quantity and price per unit.
     An example:
     2 kpl       2,98 €/kpl
   */
-  var items = row.split(RegExp(r'\s{6,7}'));
+  var items = row.splitByTwoOrMoreWhitespaces();
   var quantity = items[0].substring(0, 2).trim().replaceAllCommasWithDots();
 
   var lastProduct = receiptProducts.last;
@@ -107,7 +107,7 @@ void _handleQuantityAndPricePerUnitRow(
 /// Handle a "normal" row. An example:
 /// PERUNA-SIPULISEKOITUS                0,85
 void _handleNormalRow(String row, List<ReceiptProduct> receiptProducts) {
-  var items = row.split(RegExp(r'\s{8,35}'));
+  var items = row.splitByTwoOrMoreWhitespaces();
   var product = ReceiptProduct(
       name: items[0],
       totalPrice: double.parse(items[1].trim().replaceAllCommasWithDots()));
