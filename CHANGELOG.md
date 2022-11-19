@@ -1,3 +1,11 @@
+## 0.2.0
+
+- When a product has a counted discount, do not show a boolean value but a 'yes' string and a yellow background in the row of an Excel / XLSX file.
+- Fix a HTML file parsing into EAN products when a quantity field has a decimal instead of an integer (e.g. 0,6 instead of 1).
+- Fix a text file parsing into receipt products. Earlier was 8–35 whitespaces between a "normal" product name and total price, but e.g. 6 whitespaces didn't get splitted. Now all whitespaces beginning from 2 whitespaces are supported.
+- Enhance test coverage a bit.
+- Fix some changelog header levels.
+
 ## 0.1.3
 
 - A bug: currently, S-kaupat HTML file has a price per unit as a price for a product, not a total price as earlier. Fix the parsing logic of S-kaupat HTML file.
