@@ -35,7 +35,7 @@ Future<String> exportReceiptProductsIntoCsv(
       product.eanCode,
     ];
     if (discountCounted) {
-      productDataList.add(product.isDiscountCounted);
+      productDataList.add(product.isDiscountCounted ? 'yes' : '');
     }
     csv.write('${productDataList.join(';')}\n');
   }
