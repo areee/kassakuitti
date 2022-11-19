@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:kassakuitti/kassakuitti.dart';
+import 'package:kassakuitti/src/utils/home_directory_helper.dart';
 import 'package:mime/mime.dart';
 import 'package:test/test.dart';
 
@@ -626,5 +627,22 @@ void main() {
       expect(eanProducts[4].moreDetails,
           'TODO: fill in the amount of packaging materials and the total price.');
     }));
+  });
+
+  group('In home directory helper', () {
+    setUp(() {
+      // Additional setup goes here.
+    });
+
+    test('Reading home directory works', () {
+      final homeDir = getUserHomeDirectory();
+      expect(homeDir, isNotNull);
+    });
+
+    test('Replacing tilde with home directory works', () {
+      final path = '/test';
+      final replacedPath = replaceTildeWithHomeDirectory('~$path');
+      expect(replacedPath, '${getUserHomeDirectory()}$path');
+    });
   });
 }
