@@ -1,3 +1,9 @@
+## 0.2.2
+
+- S-kaupat had changed their price field in the EAN products. Now it's again a total price, not a unit price as it was for some weeks (compare to version 0.1.3 changes).
+- Fix S-kaupat example file.
+- Update API docs (nothing but the version number has changed).
+
 ## 0.2.1
 
 - Fix a case where a receipt product row had mistakenly two whitespaces between the name parts. An example: "Juusto  10%".
