@@ -1,3 +1,8 @@
+## 0.2.1
+
+- Fix a case where a receipt product row had mistakenly two whitespaces between the name parts. An example: "Juusto  10%".
+    - Now it allows even three whitespaces between them. Starting with four whitespaces it can be assumed that it's a separator between the name and the total price.
+
 ## 0.2.0
 
 - When a product has a counted discount, do not show a boolean value but a 'yes' string and a yellow background in the row of an Excel / XLSX file.

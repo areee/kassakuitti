@@ -70,7 +70,7 @@ void _handleDiscountOrCampaignRow(
     An example of a discount row:
     S-Etu alennus                        0,89-
   */
-  var items = row.splitByTwoOrMoreWhitespaces();
+  var items = row.splitByFourOrMoreWhitespaces();
   var discountPrice = double.parse(items[1]
       .replaceAll(RegExp(r'\-'), '') // Remove minus sign.
       .replaceAllCommasWithDots());
@@ -95,7 +95,7 @@ void _handleQuantityAndPricePerUnitRow(
     An example:
     2 kpl       2,98 €/kpl
   */
-  var items = row.splitByTwoOrMoreWhitespaces();
+  var items = row.splitByFourOrMoreWhitespaces();
   var quantity = items[0].substring(0, 2).trim().replaceAllCommasWithDots();
 
   var lastProduct = receiptProducts.last;
@@ -107,7 +107,7 @@ void _handleQuantityAndPricePerUnitRow(
 /// Handle a "normal" row. An example:
 /// PERUNA-SIPULISEKOITUS                0,85
 void _handleNormalRow(String row, List<ReceiptProduct> receiptProducts) {
-  var items = row.splitByTwoOrMoreWhitespaces();
+  var items = row.splitByFourOrMoreWhitespaces();
   var product = ReceiptProduct(
       name: items[0],
       totalPrice: double.parse(items[1].trim().replaceAllCommasWithDots()));

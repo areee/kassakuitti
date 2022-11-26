@@ -25,8 +25,8 @@ extension StringExtension on String {
     return replaceAll('kpl', '').replaceAll('kg', '');
   }
 
-  /// Split the string by two or more whitespaces.
-  List<String> splitByTwoOrMoreWhitespaces() {
-    return split(RegExp(r'\s{2,}'));
+  /// Split the string by four or more whitespaces.
+  List<String> splitByFourOrMoreWhitespaces() {
+    return split(RegExp(r'\s{4,}'));
   }
 }
