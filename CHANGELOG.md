@@ -1,3 +1,7 @@
+## 1.0.0-dev.1
+
+- Update dependencies.
+
 ## 0.2.2
 
 - S-kaupat had changed their price field in the EAN products. Now it's again a total price, not a unit price as it was for some weeks (compare to version 0.1.3 changes).
