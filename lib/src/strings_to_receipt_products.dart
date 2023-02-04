@@ -30,18 +30,25 @@ void _strings2ReceiptProductsFromList(
     // Replace non-breaking space with a normal space
     row = row.replaceAll(RegExp(r'\u00a0'), ' ');
 
-    // Do not handle sum rows (after a row of strokes):
     if (row.contains('----------')) {
+      // A sum row: stop reading
       break;
     } else if (row.contains('palautus')) {
+      // A refund row
       helper.previousRow = PreviousRow.refund;
     } else if (helper.previousRow == PreviousRow.refund) {
       _handleRefundRow(helper);
+    } else if (row.contains('tasaerä')) {
+      // An "equal instalment" row: skip it
+      continue;
     } else if (row.contains('alennus') || row.contains('kampanja')) {
+      // A discount or campaign row
       _handleDiscountOrCampaignRow(row, receiptProducts);
     } else if (row.startsWith(RegExp(r'^\d+\s{1}kpl'))) {
+      // A quantity and price per unit row
       _handleQuantityAndPricePerUnitRow(row, receiptProducts);
     } else {
+      // A "normal" row
       _handleNormalRow(row, receiptProducts);
     }
   }
