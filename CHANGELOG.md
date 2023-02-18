@@ -4,6 +4,7 @@
   - Update Dart SDK & dependencies.
   - Fix a bug: if there's a row containing a word "tasaerä" ("equal instalment"), skip it.
 - Update Dart SDK version to the latest stable Flutter version (Dart 2.19.2)
+- Fix an HTML handling bug with handling an S-kaupat HTML file. One extra div was added there.
 
 ## 0.2.2
 
