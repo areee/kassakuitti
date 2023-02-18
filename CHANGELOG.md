@@ -1,3 +1,9 @@
+## 1.0.0-dev.3
+
+- Merge with the latest version (kassakuitti 0.3.0).
+  - Update Dart SDK version to the latest stable Flutter version (Dart 2.19.2).
+  - Fix an HTML handling bug with handling an S-kaupat HTML file. One extra div was added there.
+
 ## 1.0.0-dev.2
 
 - Update Dart SDK & dependencies.
