@@ -7,6 +7,14 @@
 
 - Update dependencies.
 
+## 0.3.0
+
+- Merge with changes in the prerelease version (1.0.0-dev.2).
+  - Update Dart SDK & dependencies.
+  - Fix a bug: if there's a row containing a word "tasaerä" ("equal instalment"), skip it.
+- Update Dart SDK version to the latest stable Flutter version (Dart 2.19.2)
+- Fix an HTML handling bug with handling an S-kaupat HTML file. One extra div was added there.
+
 ## 0.2.2
 
 - S-kaupat had changed their price field in the EAN products. Now it's again a total price, not a unit price as it was for some weeks (compare to version 0.1.3 changes).
