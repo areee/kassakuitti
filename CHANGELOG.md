@@ -1,11 +1,9 @@
-## 1.0.0-dev.2
+## 0.3.0
 
-- Update Dart SDK & dependencies.
-- Fix a bug: if there's a row containing a word "tasaerä" ("equal instalment"), skip it.
-
-## 1.0.0-dev.1
-
-- Update dependencies.
+- Merge with changes in the prerelease version (1.0.0-dev.2).
+  - Update Dart SDK & dependencies.
+  - Fix a bug: if there's a row containing a word "tasaerä" ("equal instalment"), skip it.
+- Update Dart SDK version to the latest stable Flutter version (Dart 2.19.2)
 
 ## 0.2.2
 
