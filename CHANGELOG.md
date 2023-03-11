@@ -1,3 +1,8 @@
+## 0.4.0
+
+- Fix an HTML parsing bug with handling an S-kaupat HTML file. One extra div was added there (again).
+- Update one dependency & update Dart SDK version to the latest stable Flutter version (Dart 2.19.4).
+
 ## 0.3.0
 
 - Merge with changes in the prerelease version (1.0.0-dev.2).
