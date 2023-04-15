@@ -1,6 +1,6 @@
 name: kassakuitti
 description: A Dart package for handling a cash receipt coming from S-kaupat or K-ruoka (two Finnish food online stores).
-version: 0.5.1
+version: 0.5.2
 repository: https://github.com/areee/kassakuitti
 
 environment:

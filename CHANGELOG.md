@@ -1,3 +1,8 @@
+## 0.5.2
+
+- Fix an HTML parsing bug with handling an S-kaupat HTML file. One extra div was removed.
+- Update S-kaupat example HTML file (to fix broken tests).
+
 ## 0.5.1
 
 - Fix an HTML parsing bug with handling an S-kaupat HTML file. One extra div was removed & one extra div was added.
