@@ -18,11 +18,9 @@ Future<List<EANProduct>> html2EANProducts(String? filePath) async {
 /// Read EAN products from a [Document].
 void _html2EANProductsFromDocument(
     Document htmlDocument, List<EANProduct> eanProducts) {
-  var allProductsDiv = htmlDocument.body!.children[1].children[0].children[1]
-      .children[0].children[0].children[1].children[0].children[5];
-  var childrenOfAllProductsDiv = allProductsDiv.children;
-  for (var i = 1; i < childrenOfAllProductsDiv.length; i++) {
-    var product = childrenOfAllProductsDiv[i];
+  var allProducts = htmlDocument.querySelectorAll('article');
+
+  for (var product in allProducts) {
     var totalPrice = double.parse(product
         .children[1].children[1].children[0].text
         .trim()
