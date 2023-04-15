@@ -1,3 +1,8 @@
+## 0.6.0
+
+- Parse S-kaupat HTML file more easily by using a query selector instead of a strict div hierarchy.
+  - This makes the parsing more precise, which reduces the previous problems when S-ryhmä changed its div hierarchy every week (see versions 0.3.0 – 0.5.2).
+
 ## 0.5.2
 
 - Fix an HTML parsing bug with handling an S-kaupat HTML file. One extra div was removed.
