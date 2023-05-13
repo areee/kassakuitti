@@ -70,6 +70,11 @@ void _handleNormalProducts(
   var pickedProducts =
       htmlDocument.getElementsByClassName('old-order-departments')[0];
   for (var department in pickedProducts.children) {
+    // If the department heading contains 'Ei saatavilla olevat' ('Not available' in English), skip this section.
+    if (department.children[0].text.contains('Ei saatavilla olevat')) {
+      continue;
+    }
+
     var itemListing = department.children[1];
     for (var productRow in itemListing.children) {
       var productItem = productRow.children[0];
