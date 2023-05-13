@@ -1,3 +1,8 @@
+## 0.7.0
+
+- Update some dependencies & Dart SDK version to the latest stable Flutter version (Dart 3.0.0).
+- Fix HTML parsing & tests for K-ruoka & skip a 'not available' department when parsing.
+
 ## 0.6.0
 
 - Parse S-kaupat HTML file more easily by using a query selector instead of a strict div hierarchy.
