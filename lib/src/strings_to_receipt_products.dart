@@ -44,9 +44,12 @@ void _strings2ReceiptProductsFromList(
     } else if (row.contains('alennus') || row.contains('kampanja')) {
       // A discount or campaign row
       _handleDiscountOrCampaignRow(row, receiptProducts);
-    } else if (row.startsWith(RegExp(r'^\d+\s{1}kpl'))) {
+    } else if (row.startsWith(RegExp(r'^\d+\s{1}(KPL|kpl)'))) {
       // A quantity and price per unit row
       _handleQuantityAndPricePerUnitRow(row, receiptProducts);
+    } else if (row.startsWith(RegExp(r'^\d+,\d+\s{1}(KG|kg)'))) {
+      // A weight and price per kilogram row: skip it
+      continue;
     } else {
       // A "normal" row
       _handleNormalRow(row, receiptProducts);

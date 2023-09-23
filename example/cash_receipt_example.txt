@@ -3,8 +3,10 @@
  PORKKANAPUSSI                        1,35 
  KURKKU SUOMI                         4,50 
        3 KPL       1,50 €/KPL
+ Lohifilee B                         16,67 
+   0,882 KG       18,90 €/KG 
  PAKKAUSMATERIAALIT                   0,60 
  TOIMITUSMAKSU 10,90                 10,90 
                                  ----------
- YHTEENSÄ                            23,31 
- VERKKOMAKSU                         23,31 
+ YHTEENSÄ                            39,98 
+ VERKKOMAKSU                         39,98 

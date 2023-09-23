@@ -7,7 +7,6 @@ import 'package:kassakuitti/src/models/receipt_product.dart';
 import 'package:kassakuitti/src/strings_to_receipt_products.dart';
 import 'package:kassakuitti/src/utils/selected_file_format_helper.dart';
 import 'package:kassakuitti/src/utils/selected_shop_helper.dart';
-import 'package:tuple/tuple.dart';
 
 /// Creates a new [Kassakuitti] instance.
 class Kassakuitti {
@@ -58,7 +57,7 @@ class Kassakuitti {
 
   /// Export recept products and EAN products into CSV or Excel file.
   /// Returns the path(s) of the exported file(s).
-  Future<Tuple2<String?, String>> export(
+  Future<(String?, String)> export(
       List<ReceiptProduct>? receiptProducts, List<EANProduct> eanProducts,
       {String? filePath}) async {
     if (selectedShop == SelectedShop.sKaupat) {
@@ -68,31 +67,31 @@ class Kassakuitti {
       }
       if (selectedFileFormat == SelectedFileFormat.csv) {
         // Export into CSV file
-        return Tuple2(
-            await exportReceiptProductsIntoCsv(receiptProducts, filePath),
-            await exportEANProductsIntoCsv(
-                eanProducts, selectedShop, filePath));
+        return (
+          await exportReceiptProductsIntoCsv(receiptProducts, filePath),
+          await exportEANProductsIntoCsv(eanProducts, selectedShop, filePath)
+        );
       } else {
         // Export into Excel file
-        return Tuple2(
-            await exportReceiptProductsIntoExcel(receiptProducts, filePath),
-            await exportEANProductsIntoExcel(
-                eanProducts, selectedShop, filePath));
+        return (
+          await exportReceiptProductsIntoExcel(receiptProducts, filePath),
+          await exportEANProductsIntoExcel(eanProducts, selectedShop, filePath)
+        );
       }
     } else {
       // Selected shop is K-ruoka
       if (selectedFileFormat == SelectedFileFormat.csv) {
         // Export into CSV file
-        return Tuple2(
-            null,
-            await exportEANProductsIntoCsv(
-                eanProducts, selectedShop, filePath));
+        return (
+          null,
+          await exportEANProductsIntoCsv(eanProducts, selectedShop, filePath)
+        );
       } else {
         // Export into Excel file
-        return Tuple2(
-            null,
-            await exportEANProductsIntoExcel(
-                eanProducts, selectedShop, filePath));
+        return (
+          null,
+          await exportEANProductsIntoExcel(eanProducts, selectedShop, filePath)
+        );
       }
     }
   }

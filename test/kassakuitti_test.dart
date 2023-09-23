@@ -165,10 +165,10 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts,
           filePath: Directory.current.path);
-      expect(filePaths.item1!, isNotNull);
+      expect(filePaths.$1!, isNotNull);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item1!).delete();
-      await File(filePaths.item2).delete();
+      await File(filePaths.$1!).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported eanProducts is not null', () async {
@@ -176,10 +176,10 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts,
           filePath: Directory.current.path);
-      expect(filePaths.item2, isNotNull);
+      expect(filePaths.$2, isNotNull);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item1!).delete();
-      await File(filePaths.item2).delete();
+      await File(filePaths.$1!).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported receiptProducts file exists', () async {
@@ -187,10 +187,10 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts,
           filePath: Directory.current.path);
-      expect(await File(filePaths.item1!).exists(), true);
+      expect(await File(filePaths.$1!).exists(), true);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item1!).delete();
-      await File(filePaths.item2).delete();
+      await File(filePaths.$1!).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported eanProducts file exists', () async {
@@ -198,10 +198,10 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts,
           filePath: Directory.current.path);
-      expect(await File(filePaths.item2).exists(), true);
+      expect(await File(filePaths.$2).exists(), true);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item1!).delete();
-      await File(filePaths.item2).delete();
+      await File(filePaths.$1!).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported receiptProducts file extension is CSV', () async {
@@ -209,10 +209,10 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts,
           filePath: Directory.current.path);
-      expect(filePaths.item1!.endsWith('.csv'), true);
+      expect(filePaths.$1!.endsWith('.csv'), true);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item1!).delete();
-      await File(filePaths.item2).delete();
+      await File(filePaths.$1!).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported receiptProducts mime type is CSV', () async {
@@ -220,10 +220,10 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts,
           filePath: Directory.current.path);
-      expect(lookupMimeType(filePaths.item1!), 'text/csv');
+      expect(lookupMimeType(filePaths.$1!), 'text/csv');
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item1!).delete();
-      await File(filePaths.item2).delete();
+      await File(filePaths.$1!).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported eanProducts file extension is CSV', () async {
@@ -231,10 +231,10 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts,
           filePath: Directory.current.path);
-      expect(filePaths.item2.endsWith('.csv'), true);
+      expect(filePaths.$2.endsWith('.csv'), true);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item1!).delete();
-      await File(filePaths.item2).delete();
+      await File(filePaths.$1!).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported eanProducts mime type is CSV', () async {
@@ -242,10 +242,10 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts,
           filePath: Directory.current.path);
-      expect(lookupMimeType(filePaths.item2), 'text/csv');
+      expect(lookupMimeType(filePaths.$2), 'text/csv');
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item1!).delete();
-      await File(filePaths.item2).delete();
+      await File(filePaths.$1!).delete();
+      await File(filePaths.$2).delete();
     });
   });
 
@@ -301,10 +301,10 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts,
           filePath: Directory.current.path);
-      expect(filePaths.item1!, isNotNull);
+      expect(filePaths.$1!, isNotNull);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item1!).delete();
-      await File(filePaths.item2).delete();
+      await File(filePaths.$1!).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported eanProducts is not null', () async {
@@ -312,10 +312,10 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts,
           filePath: Directory.current.path);
-      expect(filePaths.item2, isNotNull);
+      expect(filePaths.$2, isNotNull);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item1!).delete();
-      await File(filePaths.item2).delete();
+      await File(filePaths.$1!).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported receiptProducts file exists', () async {
@@ -323,10 +323,10 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts,
           filePath: Directory.current.path);
-      expect(await File(filePaths.item1!).exists(), true);
+      expect(await File(filePaths.$1!).exists(), true);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item1!).delete();
-      await File(filePaths.item2).delete();
+      await File(filePaths.$1!).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported eanProducts file exists', () async {
@@ -334,10 +334,10 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts,
           filePath: Directory.current.path);
-      expect(await File(filePaths.item2).exists(), true);
+      expect(await File(filePaths.$2).exists(), true);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item1!).delete();
-      await File(filePaths.item2).delete();
+      await File(filePaths.$1!).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported receiptProducts file extension is XLSX', () async {
@@ -345,10 +345,10 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts,
           filePath: Directory.current.path);
-      expect(filePaths.item1!.endsWith('.xlsx'), true);
+      expect(filePaths.$1!.endsWith('.xlsx'), true);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item1!).delete();
-      await File(filePaths.item2).delete();
+      await File(filePaths.$1!).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported receiptProducts mime type is XLSX', () async {
@@ -356,11 +356,11 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts,
           filePath: Directory.current.path);
-      expect(lookupMimeType(filePaths.item1!),
+      expect(lookupMimeType(filePaths.$1!),
           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item1!).delete();
-      await File(filePaths.item2).delete();
+      await File(filePaths.$1!).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported eanProducts file extension is XLSX', () async {
@@ -368,10 +368,10 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts,
           filePath: Directory.current.path);
-      expect(filePaths.item2.endsWith('.xlsx'), true);
+      expect(filePaths.$2.endsWith('.xlsx'), true);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item1!).delete();
-      await File(filePaths.item2).delete();
+      await File(filePaths.$1!).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported eanProducts mime type is XLSX', () async {
@@ -379,11 +379,11 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(receiptProducts, eanProducts,
           filePath: Directory.current.path);
-      expect(lookupMimeType(filePaths.item2),
+      expect(lookupMimeType(filePaths.$2),
           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item1!).delete();
-      await File(filePaths.item2).delete();
+      await File(filePaths.$1!).delete();
+      await File(filePaths.$2).delete();
     });
   });
 
@@ -418,36 +418,36 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(null, eanProducts,
           filePath: Directory.current.path);
-      expect(filePaths.item2, isNotNull);
+      expect(filePaths.$2, isNotNull);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item2).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported eanProducts file exists', () async {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(null, eanProducts,
           filePath: Directory.current.path);
-      expect(await File(filePaths.item2).exists(), true);
+      expect(await File(filePaths.$2).exists(), true);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item2).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported eanProducts file extension is CSV', () async {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(null, eanProducts,
           filePath: Directory.current.path);
-      expect(filePaths.item2.endsWith('.csv'), true);
+      expect(filePaths.$2.endsWith('.csv'), true);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item2).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported eanProducts mime type is CSV', () async {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(null, eanProducts,
           filePath: Directory.current.path);
-      expect(lookupMimeType(filePaths.item2), 'text/csv');
+      expect(lookupMimeType(filePaths.$2), 'text/csv');
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item2).delete();
+      await File(filePaths.$2).delete();
     });
   });
 
@@ -482,37 +482,37 @@ void main() {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(null, eanProducts,
           filePath: Directory.current.path);
-      expect(filePaths.item2, isNotNull);
+      expect(filePaths.$2, isNotNull);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item2).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported eanProducts file exists', () async {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(null, eanProducts,
           filePath: Directory.current.path);
-      expect(await File(filePaths.item2).exists(), true);
+      expect(await File(filePaths.$2).exists(), true);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item2).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported eanProducts file extension is XLSX', () async {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(null, eanProducts,
           filePath: Directory.current.path);
-      expect(filePaths.item2.endsWith('.xlsx'), true);
+      expect(filePaths.$2.endsWith('.xlsx'), true);
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item2).delete();
+      await File(filePaths.$2).delete();
     });
 
     test('Exported eanProducts mime type is XLSX', () async {
       final eanProducts = await kassakuitti.readEANProducts();
       final filePaths = await kassakuitti.export(null, eanProducts,
           filePath: Directory.current.path);
-      expect(lookupMimeType(filePaths.item2),
+      expect(lookupMimeType(filePaths.$2),
           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
       // sleep(Duration(seconds: 2));
-      await File(filePaths.item2).delete();
+      await File(filePaths.$2).delete();
     });
   });
 
@@ -526,7 +526,7 @@ void main() {
 
     test('Reading receiptProducts work', (() async {
       var receiptProducts = await kassakuitti.readReceiptProducts();
-      expect(receiptProducts.length, 5);
+      expect(receiptProducts.length, 6);
       expect(receiptProducts[0].name, 'ruusukaali');
       expect(receiptProducts[0].totalPrice, 5.96);
       expect(receiptProducts[0].quantity, 2);
@@ -539,19 +539,23 @@ void main() {
       expect(receiptProducts[2].totalPrice, 4.5);
       expect(receiptProducts[2].quantity, 3);
       expect(receiptProducts[2].pricePerUnit, 1.5);
-      expect(receiptProducts[3].name, 'pakkausmateriaalit');
-      expect(receiptProducts[3].totalPrice, 0.6);
+      expect(receiptProducts[3].name, 'lohifilee b');
+      expect(receiptProducts[3].totalPrice, 16.67);
       expect(receiptProducts[3].quantity, 1);
       expect(receiptProducts[3].pricePerUnit, null);
-      expect(receiptProducts[4].name, 'toimitusmaksu 10,90');
-      expect(receiptProducts[4].totalPrice, 10.9);
+      expect(receiptProducts[4].name, 'pakkausmateriaalit');
+      expect(receiptProducts[4].totalPrice, 0.6);
       expect(receiptProducts[4].quantity, 1);
       expect(receiptProducts[4].pricePerUnit, null);
+      expect(receiptProducts[5].name, 'toimitusmaksu 10,90');
+      expect(receiptProducts[5].totalPrice, 10.9);
+      expect(receiptProducts[5].quantity, 1);
+      expect(receiptProducts[5].pricePerUnit, null);
     }));
 
     test('Reading eanProducts work', (() async {
       var eanProducts = await kassakuitti.readEANProducts();
-      expect(eanProducts.length, 5);
+      expect(eanProducts.length, 6);
       expect(eanProducts[0].name, 'Kotimaista ruusukaali 300 g Suomi');
       expect(eanProducts[0].totalPrice, 5.96);
       expect(eanProducts[0].quantity, 2);
@@ -570,18 +574,25 @@ void main() {
       expect(eanProducts[2].pricePerUnit, 1.61);
       expect(eanProducts[2].eanCode, '2000604700007');
       expect(eanProducts[2].moreDetails, null);
-      expect(eanProducts[3].name, 'Pakkausmateriaalimaksu');
-      expect(eanProducts[3].totalPrice, 0.6);
+      expect(
+          eanProducts[3].name, 'Rainbow lohifilee noin 800g (600-1000g) vac');
+      expect(eanProducts[3].totalPrice, 10.32);
       expect(eanProducts[3].quantity, 1);
       expect(eanProducts[3].pricePerUnit, null);
-      expect(eanProducts[3].eanCode, '0200060667032');
+      expect(eanProducts[3].eanCode, '2396003800005');
       expect(eanProducts[3].moreDetails, null);
-      expect(eanProducts[4].name, 'Kotiinkuljetus');
-      expect(eanProducts[4].totalPrice, 10.9);
+      expect(eanProducts[4].name, 'Pakkausmateriaalimaksu');
+      expect(eanProducts[4].totalPrice, 0.6);
       expect(eanProducts[4].quantity, 1);
       expect(eanProducts[4].pricePerUnit, null);
-      expect(eanProducts[4].eanCode, '0200096900752');
+      expect(eanProducts[4].eanCode, '0200060667032');
       expect(eanProducts[4].moreDetails, null);
+      expect(eanProducts[5].name, 'Kotiinkuljetus');
+      expect(eanProducts[5].totalPrice, 10.9);
+      expect(eanProducts[5].quantity, 1);
+      expect(eanProducts[5].pricePerUnit, null);
+      expect(eanProducts[5].eanCode, '0200096900752');
+      expect(eanProducts[5].moreDetails, null);
     }));
   });
 

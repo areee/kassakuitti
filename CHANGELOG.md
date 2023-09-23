@@ -1,3 +1,10 @@
+## 0.8.0
+
+- Add support (or fix) for a weight & price per kilogram row.
+- Update some dependencies & Dart SDK version to the latest stable Flutter version (Dart 3.1.2).
+- Remove [_tuple_](https://pub.dev/packages/tuple) dependency & use [records](https://dart.dev/language/records).
+- Add an example row & update tests for the weight & price per kilogram row.
+
 ## 0.7.0
 
 - Update some dependencies & Dart SDK version to the latest stable Flutter version (Dart 3.0.0).
