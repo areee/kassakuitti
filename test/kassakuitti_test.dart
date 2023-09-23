@@ -526,7 +526,7 @@ void main() {
 
     test('Reading receiptProducts work', (() async {
       var receiptProducts = await kassakuitti.readReceiptProducts();
-      expect(receiptProducts.length, 5);
+      expect(receiptProducts.length, 6);
       expect(receiptProducts[0].name, 'ruusukaali');
       expect(receiptProducts[0].totalPrice, 5.96);
       expect(receiptProducts[0].quantity, 2);
@@ -539,19 +539,23 @@ void main() {
       expect(receiptProducts[2].totalPrice, 4.5);
       expect(receiptProducts[2].quantity, 3);
       expect(receiptProducts[2].pricePerUnit, 1.5);
-      expect(receiptProducts[3].name, 'pakkausmateriaalit');
-      expect(receiptProducts[3].totalPrice, 0.6);
+      expect(receiptProducts[3].name, 'lohifilee b');
+      expect(receiptProducts[3].totalPrice, 16.67);
       expect(receiptProducts[3].quantity, 1);
       expect(receiptProducts[3].pricePerUnit, null);
-      expect(receiptProducts[4].name, 'toimitusmaksu 10,90');
-      expect(receiptProducts[4].totalPrice, 10.9);
+      expect(receiptProducts[4].name, 'pakkausmateriaalit');
+      expect(receiptProducts[4].totalPrice, 0.6);
       expect(receiptProducts[4].quantity, 1);
       expect(receiptProducts[4].pricePerUnit, null);
+      expect(receiptProducts[5].name, 'toimitusmaksu 10,90');
+      expect(receiptProducts[5].totalPrice, 10.9);
+      expect(receiptProducts[5].quantity, 1);
+      expect(receiptProducts[5].pricePerUnit, null);
     }));
 
     test('Reading eanProducts work', (() async {
       var eanProducts = await kassakuitti.readEANProducts();
-      expect(eanProducts.length, 5);
+      expect(eanProducts.length, 6);
       expect(eanProducts[0].name, 'Kotimaista ruusukaali 300 g Suomi');
       expect(eanProducts[0].totalPrice, 5.96);
       expect(eanProducts[0].quantity, 2);
@@ -570,18 +574,25 @@ void main() {
       expect(eanProducts[2].pricePerUnit, 1.61);
       expect(eanProducts[2].eanCode, '2000604700007');
       expect(eanProducts[2].moreDetails, null);
-      expect(eanProducts[3].name, 'Pakkausmateriaalimaksu');
-      expect(eanProducts[3].totalPrice, 0.6);
+      expect(
+          eanProducts[3].name, 'Rainbow lohifilee noin 800g (600-1000g) vac');
+      expect(eanProducts[3].totalPrice, 10.32);
       expect(eanProducts[3].quantity, 1);
       expect(eanProducts[3].pricePerUnit, null);
-      expect(eanProducts[3].eanCode, '0200060667032');
+      expect(eanProducts[3].eanCode, '2396003800005');
       expect(eanProducts[3].moreDetails, null);
-      expect(eanProducts[4].name, 'Kotiinkuljetus');
-      expect(eanProducts[4].totalPrice, 10.9);
+      expect(eanProducts[4].name, 'Pakkausmateriaalimaksu');
+      expect(eanProducts[4].totalPrice, 0.6);
       expect(eanProducts[4].quantity, 1);
       expect(eanProducts[4].pricePerUnit, null);
-      expect(eanProducts[4].eanCode, '0200096900752');
+      expect(eanProducts[4].eanCode, '0200060667032');
       expect(eanProducts[4].moreDetails, null);
+      expect(eanProducts[5].name, 'Kotiinkuljetus');
+      expect(eanProducts[5].totalPrice, 10.9);
+      expect(eanProducts[5].quantity, 1);
+      expect(eanProducts[5].pricePerUnit, null);
+      expect(eanProducts[5].eanCode, '0200096900752');
+      expect(eanProducts[5].moreDetails, null);
     }));
   });
 
