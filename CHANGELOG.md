@@ -1,3 +1,11 @@
+## 0.9.0
+
+- Add an extension for better exception handling for children checking.
+- Fix an HTML parsing bug with handling an S-kaupat HTML file (some extra divs were added).
+- Update S-kaupat example HTML file (to fix broken tests).
+- Update some dependencies & Dart SDK version to the latest stable Flutter version (Dart 3.1.5).
+- Update API documentation.
+
 ## 0.8.0
 
 - Add support (or fix) for a weight & price per kilogram row.
