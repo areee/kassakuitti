@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../../static-assets/github.css?v1">
   <link rel="stylesheet" href="../../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../../" data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">kassakuitti</a></li>
     <li><a href="../../kassakuitti/kassakuitti-library.html">kassakuitti</a></li>
@@ -37,21 +37,33 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
 
-
-  <div id="dartdoc-main-content" class="main-content">
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="kassakuitti&#47;Kassakuitti-class-sidebar.html"
+      data-below-sidebar="">
       <div>
 <h1><span class="kind-method">readEANProducts</span> method 
-    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../kassakuitti/EANProduct-class.html">EANProduct</a></span>&gt;</span></span>&gt;</span></span>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.1.5/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.1.5/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../kassakuitti/EANProduct-class.html">EANProduct</a></span>&gt;</span></span>&gt;</span></span>
 <span class="name ">readEANProducts</span>(<wbr>)
 
       
@@ -77,52 +89,22 @@
   </div> <!-- /.main-content -->
 
   <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-    <header id="header-search-sidebar" class="hidden-l">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
 </header>
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-  <li><a href="../../index.html">kassakuitti</a></li>
-  <li><a href="../../kassakuitti/kassakuitti-library.html">kassakuitti</a></li>
-  <li><a href="../../kassakuitti/Kassakuitti-class.html">Kassakuitti</a></li>
-  <li class="self-crumb">readEANProducts method</li>
+    <li><a href="../../index.html">kassakuitti</a></li>
+    <li><a href="../../kassakuitti/kassakuitti-library.html">kassakuitti</a></li>
+    <li><a href="../../kassakuitti/Kassakuitti-class.html">Kassakuitti</a></li>
+    <li class="self-crumb">readEANProducts method</li>
 </ol>
 
 
     <h5>Kassakuitti class</h5>
-    <ol>
-
-        <li class="section-title"><a href="../../kassakuitti/Kassakuitti-class.html#constructors">Constructors</a></li>
-          <li><a href="../../kassakuitti/Kassakuitti/Kassakuitti.html">Kassakuitti</a></li>
-
-
-    <li class="section-title">
-      <a href="../../kassakuitti/Kassakuitti-class.html#instance-properties">Properties</a>
-    </li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li><a href="../../kassakuitti/Kassakuitti/htmlFilePath.html">htmlFilePath</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    <li><a href="../../kassakuitti/Kassakuitti/selectedFileFormat.html">selectedFileFormat</a></li>
-    <li><a href="../../kassakuitti/Kassakuitti/selectedShop.html">selectedShop</a></li>
-    <li><a href="../../kassakuitti/Kassakuitti/textFilePath.html">textFilePath</a></li>
-
-    <li class="section-title"><a href="../../kassakuitti/Kassakuitti-class.html#instance-methods">Methods</a></li>
-    <li><a href="../../kassakuitti/Kassakuitti/export.html">export</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li><a href="../../kassakuitti/Kassakuitti/readEANProducts.html">readEANProducts</a></li>
-    <li><a href="../../kassakuitti/Kassakuitti/readReceiptProducts.html">readReceiptProducts</a></li>
-    <li><a href="../../kassakuitti/Kassakuitti/toString.html">toString</a></li>
-
-    <li class="section-title inherited"><a href="../../kassakuitti/Kassakuitti-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
-
-
-
-
-</ol>
-
   </div><!--/.sidebar-offcanvas-->
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
@@ -133,7 +115,7 @@
 <footer>
   <span class="no-break">
     kassakuitti
-      0.2.2
+      0.9.0
   </span>
 
   
