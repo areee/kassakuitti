@@ -50,4 +50,4 @@ jobs:
       - name: Run tests with coverage
         run: dart pub global run coverage:test_with_coverage
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
